@@ -9,11 +9,15 @@ int main(){
     
     //carro 1 (textura e imagens):
     Image carro1 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_01.png");
+    Image carro1destruido = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_05.png");
+    ImageResize(&carro1destruido, 50, 100);
     ImageResize(&carro1, 50, 100); //deixando o carro menor
     Texture2D carro1textura = LoadTextureFromImage(carro1);  
     
     //carro 2 (textura e imagens):
     Image carro2 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_3_Main_Positions/Car_3_01.png");
+    Image carro2destruido = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_3_Main_Positions/Car_3_05.png");
+    ImageResize(&carro2destruido, 50, 100);
     ImageResize(&carro2, 50, 100); //deixando o carro menor
     Texture2D carro2textura = LoadTextureFromImage(carro2);
     
@@ -117,7 +121,12 @@ int main(){
         ycarro2 += 2.0f;
         rotacaocarro2 = 180.0f;
     }
-    
+        if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+            DrawText("Colidiu", 5, 5, 25, BLACK);
+            carro2textura = LoadTextureFromImage(carro2destruido);
+            carro1textura = LoadTextureFromImage(carro1destruido);
+        }
+        
     //desenhando:
         BeginDrawing();
         
@@ -134,6 +143,7 @@ int main(){
             
         EndDrawing();
     }
+    
     UnloadTexture(carro1textura);
     UnloadTexture(carro2textura);
     CloseWindow();
