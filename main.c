@@ -7,22 +7,56 @@ int main(){
     InitWindow(ScreenWidth, ScreenHeight, "JogoDeCorrida");
     SetTargetFPS(60);
     
-    //carro 1 (textura e imagens):
+    //carro1 (textura e imagens):
     Image carro1 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_01.png");
-    Image carro1destruido = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_05.png");
-    ImageResize(&carro1destruido, 50, 100);
     ImageResize(&carro1, 50, 100); //deixando o carro menor
     Texture2D carro1textura = LoadTextureFromImage(carro1);  
     
-    //carro 2 (textura e imagens):
+    //carr1 primeira destruicao (imagem):
+    Image carro1destruido1 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_02.png");
+    ImageResize(&carro1destruido1, 50, 100);
+    
+    //carro1 segunda destruicao (imagem):
+    Image carro1destruido2 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_02.png");
+    ImageResize(&carro1destruido2, 50, 100);
+    
+    //carro1 terceira destruicao (imagem):
+    Image carro1destruido3 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_04.png");
+    ImageResize(&carro1destruido3, 50, 100);
+    
+    //carro1 quarta destruicao (imagem):
+    Image carro1destruido4 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_05.png");
+    ImageResize(&carro1destruido4, 50, 100);
+    
+
+    //carro2 (textura e imagens):
     Image carro2 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_3_Main_Positions/Car_3_01.png");
-    Image carro2destruido = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_3_Main_Positions/Car_3_05.png");
-    ImageResize(&carro2destruido, 50, 100);
     ImageResize(&carro2, 50, 100); //deixando o carro menor
     Texture2D carro2textura = LoadTextureFromImage(carro2);
     
+    //carro2 primeira destruicao (imagem):
+    Image carro2destruido1 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_3_Main_Positions/Car_3_02.png");
+    ImageResize(&carro2destruido1, 50, 100);
+    
+    //carro2 segunda destruicao (imagem):
+    Image carro2destruido2 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_3_Main_Positions/Car_3_03.png");
+    ImageResize(&carro2destruido2, 50, 100);
+    
+    //carro2 terceira destruicao (imagem):
+    Image carro2destruido3 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_3_Main_Positions/Car_3_03.png");
+    ImageResize(&carro2destruido3, 50, 100);
+    
+    //carro2 quarta destruicao (imagem):
+    Image carro2destruido4 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_3_Main_Positions/Car_3_05.png");
+    ImageResize(&carro2destruido4, 50, 100);
+    
+    
+    
     float rotacaocarro1 = 0.0f;
     float rotacaocarro2 = 0.0f;
+    
+    int contadorcolisaocarro1 = 0;
+    int contadorcolisaocarro2 = 0;
     
     float xcarro1 = ScreenWidth/2 - 30;
     float ycarro1 = ScreenHeight/2 - 30;
@@ -123,9 +157,21 @@ int main(){
     }
         if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
             DrawText("Colidiu", 5, 5, 25, BLACK);
-            carro2textura = LoadTextureFromImage(carro2destruido);
-            carro1textura = LoadTextureFromImage(carro1destruido);
+            contadorcolisaocarro1++;
+            contadorcolisaocarro2++;
         }
+        
+        if(contadorcolisaocarro1==1) carro1textura = LoadTextureFromImage(carro1destruido1);
+        else if(contadorcolisaocarro1==2) carro1textura = LoadTextureFromImage(carro1destruido2);
+        else if(contadorcolisaocarro1==3) carro1textura = LoadTextureFromImage(carro1destruido3);
+        else if(contadorcolisaocarro1>=4) carro1textura = LoadTextureFromImage(carro1destruido4);
+        
+        if(contadorcolisaocarro2==1) carro2textura = LoadTextureFromImage(carro2destruido1);
+        else if(contadorcolisaocarro2==2) carro2textura = LoadTextureFromImage(carro2destruido2);
+        else if(contadorcolisaocarro2==3) carro2textura = LoadTextureFromImage(carro2destruido3);
+        else if(contadorcolisaocarro2>=4) carro2textura = LoadTextureFromImage(carro2destruido4);
+        
+        
         
     //desenhando:
         BeginDrawing();
