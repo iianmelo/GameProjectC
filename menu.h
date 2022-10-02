@@ -6,8 +6,8 @@
 void iniciarMenu();
 void abrirExplicacao();
 void iniciandoJogo();
-void paraOndeIr(int aux);
-void fechamento();
+//void paraOndeIr(int aux);
+//void fechamento();
 
 //declarando tamanhos da tela
     const int screenWidth = 1280;
