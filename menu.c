@@ -7,40 +7,59 @@ int flagMenu = 0;
 Texture2D imagemMenu;
 Texture2D imagemComoJogar;
 Texture2D imagemIniciando;
-int aux=1;
-imagemMenu = LoadTexture("menu_inicial.png");
-imagemComoJogar = LoadTexture("como_jogar.png");
-imagemIniciando = LoadTexture("iniciandonovo.png");
+int aux;
 
-void paraOndeIr(int aux);
-    if(aux==1) {
-        iniciarMenu();
-    }else if(aux==2){
-        iniciandoJogo();
-    }else if(aux==3){
-        abrirExplicacao();
+int main(){
+
+    //nt flagMenu = 0;
+    InitWindow(screenWidth,screenHeight, "oiiiiii SOS DESESPERO CRYING"); //tamanho da tela
+    SetTargetFPS(60); 
+    aux=1;
+    //declarando imagens
+    
+    imagemMenu = LoadTexture("menu_inicial.png");
+    imagemComoJogar = LoadTexture("como_jogar.png");
+    imagemIniciando = LoadTexture("iniciandonovo.png");
+
+
+    while(!WindowShouldClose()){ 
+        BeginDrawing();
+        ClearBackground(BLACK);
+        if(aux==1) {
+            iniciarMenu();
+        }else if(aux==2){
+            iniciandoJogo();
+        }else if(aux==3){
+            abrirExplicacao();
+        }
+        EndDrawing();   
     }
+
+    //fechando as coisas
+    CloseWindow();
+    UnloadTexture(imagemMenu);
+    UnloadTexture(imagemIniciando);
+    UnloadTexture(imagemComoJogar);
+}
 
 void iniciarMenu(){
-imagemMenu = LoadTexture("menu_inicial.png");
-DrawTexture(imagemMenu,0,0, RAYWHITE); //isso aqui é pra desenhar no centro da tela
+    imagemMenu = LoadTexture("menu_inicial.png");
+    DrawTexture(imagemMenu,0,0, RAYWHITE); //isso aqui é pra desenhar no centro da tela
 
-//agora o que vai acontecer quando pressionar cada tecla
-if(IsKeyDown(KEY_S)){
-    aux=2;
-    paraOndeIr(aux);
-}
-if(IsKeyDown(KEY_H)){
-    aux=3;
-    paraOndeIr(aux);
+    //agora o que vai acontecer quando pressionar cada tecla
+    if(IsKeyDown(KEY_S)){
+        aux=2;
+    }
+    if(IsKeyDown(KEY_H)){
+      aux=3;
     }
 }
+
 void abrirExplicacao(){
     imagemComoJogar = LoadTexture("como_jogar.png");
     DrawTexture(imagemComoJogar,0,0, RAYWHITE);
     if(IsKeyDown(KEY_M)){
       aux=1;
-      paraOndeIr(aux);
     }
 }
 
@@ -55,12 +74,5 @@ void iniciandoJogo(){
 
     if(IsKeyDown(KEY_M)){
       aux=1;
-      paraOndeIr(aux);
     }
 }
-void fechamento(){
-    UnloadTexture(imagemMenu);
-    UnloadTexture(imagemIniciando);
-    UnloadTexture(imagemComoJogar);
-}
-
