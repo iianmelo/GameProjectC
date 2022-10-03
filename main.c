@@ -75,91 +75,149 @@ int main(){
     
     //loop principal do jogo
     while(!WindowShouldClose()){
+        
          
         //essas duas variaveis estao no loop pois precisam ser trocadas, de acordo com o teclado
         Rectangle car1Rectangle_destination = {xcarro1, ycarro1, carro1textura.width, carro1textura.height};
         Rectangle car2Rectangle_destination = {xcarro2, ycarro2, carro2textura.width, carro2textura.height};
         
+         if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+            DrawText("Colidiu", 5, 5, 25, BLACK);
+            contadorcolisaocarro1++;
+            contadorcolisaocarro2++;
+        }
+        
         
         if(IsKeyDown(KEY_RIGHT) && IsKeyUp(KEY_UP) && IsKeyUp(KEY_DOWN)){ // carrinho so indo para a direita
             xcarro1 += 2.0f;
             rotacaocarro1 = 90.0f;
+                if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+                    xcarro1 -= 6.0f;
+                }
         }
         if(IsKeyDown(KEY_RIGHT) && IsKeyDown(KEY_UP)){ //carrinho indo para a direita e para cima
             xcarro1 += 2.0f;
             ycarro1 -= 2.0f;
             rotacaocarro1 = 45.0f;
+            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+                    xcarro1 -= 6.0f;
+                    ycarro1 += 6.0f;
+                }
         }
         if(IsKeyDown(KEY_RIGHT) && IsKeyDown(KEY_DOWN)){ //carrinho indo para a direita e para baixo
             xcarro1 += 2.0f;
             ycarro1 += 2.0f;
             rotacaocarro1 = 135.0f;
+            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+                    xcarro1 -= 6.0f;
+                    ycarro1 -= 6.0f;
+                }
         }
         if(IsKeyDown(KEY_LEFT) && IsKeyUp(KEY_UP) && IsKeyUp(KEY_DOWN)){ //carrinho so indo para a esquerda
             xcarro1 -= 2.0f;
             rotacaocarro1 = 270.0f;
+            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+                    xcarro1 += 6.0f;
+                }
         }
         if(IsKeyDown(KEY_LEFT) && IsKeyDown(KEY_UP)){ //carrinho indo para a esquerda e para cima
             xcarro1 -= 2.0f;
             ycarro1 -= 2.0f;
             rotacaocarro1 = 315.0f;
+            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+                    xcarro1 += 6.0f;
+                    ycarro1 += 6.0f;
+                }
         }
         if(IsKeyDown(KEY_LEFT) && IsKeyDown(KEY_DOWN)){ //carrinho indo para a esquerda e para baixo
             ycarro1 += 2.0f;
             xcarro1 -= 2.0f;
             rotacaocarro1 = 225.0f;
+            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+                    xcarro1 += 6.0f;
+                    ycarro1 -= 6.0f;
+                }
         }
         if(IsKeyDown(KEY_UP) && IsKeyUp(KEY_LEFT) && IsKeyUp(KEY_RIGHT)){ //carrinho so indo para cima
             ycarro1 -= 2.0f;
             rotacaocarro1 = 0.0f;
+            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+                    ycarro1 += 6.0f;
+                }
         }
         if(IsKeyDown(KEY_DOWN) && IsKeyUp(KEY_LEFT) && IsKeyUp(KEY_RIGHT)){ //carrinho so indo para baixo
-        
             ycarro1 += 2.0f;
             rotacaocarro1 = 180.0f;
+            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+                    ycarro1 -= 6.0f;
+                }
         }
         
         if(IsKeyDown(KEY_D) && IsKeyUp(KEY_W) && IsKeyUp(KEY_S)){ // carrinho so indo para a direita
             xcarro2 += 2.0f;
             rotacaocarro2 = 90.0f;
+            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+                    xcarro2 -= 6.0f;
+                }
         }
         if(IsKeyDown(KEY_D) && IsKeyDown(KEY_W)){ //carrinho indo para a direita e para cima
             xcarro2 += 2.0f;
             ycarro2 -= 2.0f;
             rotacaocarro2 = 45.0f;
+            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+                    xcarro2 -= 6.0f;
+                    ycarro2 += 6.0f;
+                }
         }
         if(IsKeyDown(KEY_D) && IsKeyDown(KEY_S)){ //carrinho indo para a direita e para baixo
             xcarro2 += 2.0f;
             ycarro2 += 2.0f;
             rotacaocarro2 = 135.0f;
+            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+                    xcarro2 -= 6.0f;
+                    ycarro2 -= 6.0f;
+                }
         }
         if(IsKeyDown(KEY_A) && IsKeyUp(KEY_W) && IsKeyUp(KEY_S)){ //carrinho so indo para a esquerda
             xcarro2 -= 2.0f;
             rotacaocarro2 = 270.0f;
+            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+                    xcarro2 += 6.0f;
+                }
         }
         if(IsKeyDown(KEY_A) && IsKeyDown(KEY_W)){ //carrinho indo para a esquerda e para cima
             xcarro2 -= 2.0f;
             ycarro2 -= 2.0f;
             rotacaocarro2 = 315.0f;
+            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+                    xcarro2 += 6.0f;
+                    ycarro2 += 6.0f;
+                }
         }
         if(IsKeyDown(KEY_A) && IsKeyDown(KEY_S)){ //carrinho indo para a esquerda e para baixo
             ycarro2 += 2.0f;
             xcarro2 -= 2.0f;
             rotacaocarro2 = 225.0f;
+            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+                    xcarro2 += 6.0f;
+                    ycarro2 -= 6.0f;
+                }
         }
         if(IsKeyDown(KEY_W) && IsKeyUp(KEY_A) && IsKeyUp(KEY_D)){ //carrinho so indo para cima
             ycarro2 -= 2.0f;
             rotacaocarro2 = 0.0f;
+            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+                    ycarro2 += 6.0f;
+                }
         }
         if(IsKeyDown(KEY_S) && IsKeyUp(KEY_A) && IsKeyUp(KEY_D)){ //carrinho so indo para baixo
         ycarro2 += 2.0f;
         rotacaocarro2 = 180.0f;
+            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
+                    ycarro2 -= 4.0f;
+                }
     }
-        if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-            DrawText("Colidiu", 5, 5, 25, BLACK);
-            contadorcolisaocarro1++;
-            contadorcolisaocarro2++;
-        }
+       
         
         if(contadorcolisaocarro1==1) carro1textura = LoadTextureFromImage(carro1destruido1);
         else if(contadorcolisaocarro1==2) carro1textura = LoadTextureFromImage(carro1destruido2);
