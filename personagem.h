@@ -1,3 +1,6 @@
+#ifndef personagem
+#define personagem
+
 #include "raylib.h"
 
 typedef struct{
@@ -18,3 +21,5 @@ int colidiu(veiculo carro, Rectangle* mapa, int numero_bordas);
 int movimentarCarro1(veiculo* carro1, Rectangle mapa);
 
 int movimentarCarro2(veiculo* carro2, Rectangle mapa);
+
+#endif
