@@ -36,8 +36,7 @@ int main(){
     Texture2D text_carro1_esquerda = LoadTextureFromImage(carro1_esquerda);
     Texture2D text_carro1_baixo = LoadTextureFromImage(carro1_baixo);
     Texture2D textura1_atual;
-    Texture2D textura2_atual;
-
+    
     //Imagens e Texturas carro 2 (amarelo):
     Image carro2_cima = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_3_01_cima.png");
     ImageResize (&carro2_cima, 50, 100);
@@ -52,10 +51,12 @@ int main(){
     Texture2D text_carro2_direita = LoadTextureFromImage(carro2_direita);
     Texture2D text_carro2_esquerda = LoadTextureFromImage(carro2_esquerda);
     Texture2D text_carro2_baixo = LoadTextureFromImage(carro2_baixo);
-
+    Texture2D textura2_atual;
 
     //Imagens e Texturas nitro:
-    Texture2D textura_nitro;
+    Image nitro_imagem = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_Effects/Nitro/Nitro_006.png");
+    ImageResize(&nitro_imagem, 12, 30);
+    Texture2D nitro = LoadTextureFromImage(nitro_imagem);
 
     //loop principal do jogo
     while (!WindowShouldClose()){
@@ -134,10 +135,8 @@ int main(){
             }
             
             //animando os carros:
-            animarCarro(&carro1_sheet, textura1_atual, textura_nitro, carro1);
-            animarCarro(&carro2_sheet, textura2_atual, textura_nitro, carro2);
-
-
+            animarCarro(&carro1_sheet, textura1_atual, nitro, carro1);
+            animarCarro(&carro2_sheet, textura2_atual, nitro, carro2);
 
             EndDrawing();
         }
