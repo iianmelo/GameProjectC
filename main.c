@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include "personagem.h"
 #include "animacao.h"
-#include "mapa.h"
 
 int numero_bordas = 100; //numero da quantidade de retangulos do mapa
 int acaoCarro1;
@@ -11,7 +10,7 @@ int acaoCarro2;
 
 int main(){
 
-    InitWindow(GeScreenWidth(), GetScreenHeight(), "IPRacers");
+    InitWindow(GetScreenWidth(), GetScreenHeight(), "IPRacers");
     ToggleFullscreen();
     InitAudioDevice();
     SetTargetFPS(60);
@@ -54,6 +53,10 @@ int main(){
     Texture2D text_carro2_esquerda = LoadTextureFromImage(carro2_esquerda);
     Texture2D text_carro2_baixo = LoadTextureFromImage(carro2_baixo);
 
+
+    //Imagens e Texturas nitro:
+    Texture2D textura_nitro;
+
     //loop principal do jogo
     while (!WindowShouldClose()){
         
@@ -88,6 +91,18 @@ int main(){
                 case 4:
                     textura1_atual = LoadTextureFromImage(carro1_esquerda);
                     break;
+                case 5:
+                    textura1_atual = LoadTextureFromImage(carro1_cima);
+                    break;
+                case 6:
+                    textura1_atual = LoadTextureFromImage(carro1_baixo);
+                    break;
+                case 7:
+                    textura1_atual = LoadTextureFromImage(carro1_baixo);
+                    break;
+                case 8:
+                    textura1_atual = LoadTextureFromImage(carro1_cima);
+                    break;
             }
 
             switch(acaoCarro2){
@@ -102,6 +117,18 @@ int main(){
                     textura2_atual = LoadTextureFromImage(carro2_cima);
                     break;
                 case 4:
+                    textura2_atual = LoadTextureFromImage(carro2_cima);
+                    break; 
+                case 5:
+                    textura2_atual = LoadTextureFromImage(carro2_cima);
+                    break;
+                case 6:
+                    textura2_atual = LoadTextureFromImage(carro2_baixo);
+                    break;
+                case 7:
+                    textura2_atual = LoadTextureFromImage(carro2_baixo);
+                    break;
+                case 8:
                     textura2_atual = LoadTextureFromImage(carro2_cima);
                     break;
             }
