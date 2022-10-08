@@ -11,6 +11,6 @@ typedef struct{
     int direcao; //esse parametro dependera do valor que a funcao de movimentar o carro retornar
 } spritesheetcarro;
 
-void animarCarro(spritesheet* carro, Texture2D* textura_carro, Texture2D* textura_nitro, veiculo carro);
+void animarCarro(spritesheet* carro_sheet, Texture2D* textura_carro, Texture2D* textura_nitro, veiculo carro);
 
 #endif
