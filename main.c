@@ -1,256 +1,144 @@
-#include "raylib.h"
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include "personagem.h"
+#include "animacao.h"
+#include "mapa.h"
+
+int numero_bordas = 100; //numero da quantidade de retangulos do mapa
+int acaoCarro1;
+int acaoCarro2;
 
 int main(){
-    int ScreenWidth = 1080;
-    int ScreenHeight = 720;
-    
-    InitWindow(ScreenWidth, ScreenHeight, "JogoDeCorrida");
-    SetTargetFPS(60);
-    
-    //carro1 (textura e imagens):
-    Image carro1 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_01.png");
-    ImageResize(&carro1, 50, 100); //deixando o carro menor
-    Texture2D carro1textura = LoadTextureFromImage(carro1);  
-    
-    //carr1 primeira destruicao (imagem):
-    Image carro1destruido1 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_02.png");
-    ImageResize(&carro1destruido1, 50, 100);
-    
-    //carro1 segunda destruicao (imagem):
-    Image carro1destruido2 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_02.png");
-    ImageResize(&carro1destruido2, 50, 100);
-    
-    //carro1 terceira destruicao (imagem):
-    Image carro1destruido3 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_04.png");
-    ImageResize(&carro1destruido3, 50, 100);
-    
-    //carro1 quarta destruicao (imagem):
-    Image carro1destruido4 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_05.png");
-    ImageResize(&carro1destruido4, 50, 100);
-    
 
-    //carro2 (textura e imagens):
-    Image carro2 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_3_Main_Positions/Car_3_01.png");
-    ImageResize(&carro2, 50, 100); //deixando o carro menor
-    Texture2D carro2textura = LoadTextureFromImage(carro2);
-    
-    //carro2 primeira destruicao (imagem):
-    Image carro2destruido1 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_3_Main_Positions/Car_3_02.png");
-    ImageResize(&carro2destruido1, 50, 100);
-    
-    //carro2 segunda destruicao (imagem):
-    Image carro2destruido2 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_3_Main_Positions/Car_3_03.png");
-    ImageResize(&carro2destruido2, 50, 100);
-    
-    //carro2 terceira destruicao (imagem):
-    Image carro2destruido3 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_3_Main_Positions/Car_3_03.png");
-    ImageResize(&carro2destruido3, 50, 100);
-    
-    //carro2 quarta destruicao (imagem):
-    Image carro2destruido4 = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_3_Main_Positions/Car_3_05.png");
-    ImageResize(&carro2destruido4, 50, 100);
-    
-    
-    
-    float rotacaocarro1 = 0.0f;
-    float rotacaocarro2 = 0.0f;
-    
-    int contadorcolisaocarro1 = 0;
-    int contadorcolisaocarro2 = 0;
-    
-    float xcarro1 = ScreenWidth/2 - 30;
-    float ycarro1 = ScreenHeight/2 - 30;
-        
-    float xcarro2 = ScreenWidth/2 + 30;
-    float ycarro2 = ScreenHeight/2 + 30;
-    
-    Vector2 car1Center = {25, 50};
-    Vector2 car1Position = {xcarro1, ycarro1}; 
-    Rectangle car1Rectangle_source = {0, 0, carro1textura.width, carro1textura.height};
-    
-    Vector2 car2Center = {25, 50};
-    Vector2 car2Position = {xcarro2, ycarro2};
-    Rectangle car2Rectangle_source = {0, 0, carro2textura.width, carro2textura.height};
-    
-    
+    InitWindow(GeScreenWidth(), GetScreenHeight(), "IPRacers");
+    ToggleFullscreen();
+    InitAudioDevice();
+    SetTargetFPS(60);
+    int ScreenWid = GetScreenWidth();
+    int ScreenHei = GetScreenHeight();
+
+    spritesheetcarro carro1_sheet = {0, 0.0f, 1}; //nitro comeca desligado e o carro1 nasce apontando para cima
+    spritesheetcarro carro2_sheet = {0, 0.0f, 1}; //nitro comeca desligado e o carro2 nasce apontando para cima
+    Rectangle mapa = {0, 0, ScreenWid, ScreenHei};
+
+    //Imagens e Texturas carro 1 (vermelho):
+    Image carro1_cima = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_01_cima.png");
+    ImageResize (&carro1_cima, 50, 100);
+    Image carro1_direita = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_01_direita.png"); 
+    ImageResize(&carro1_direita, 100, 50);
+    Image carro1_esquerda = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_01_esquerda.png");
+    ImageResize(&carro1_direita, 100, 50);
+    Image carro1_baixo = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_01_baixo.png");
+    ImageResize(&carro1_baixo, 50, 100);
+
+    Texture2D text_carro1_cima = LoadTextureFromImage(carro1_cima);
+    Texture2D text_carro1_direita = LoadTextureFromImage(carro1_direita);
+    Texture2D text_carro1_esquerda = LoadTextureFromImage(carro1_esquerda);
+    Texture2D text_carro1_baixo = LoadTextureFromImage(carro1_baixo);
+    Texture2D textura1_atual;
+    Texture2D textura2_atual;
+
+    //Imagens e Texturas carro 2 (amarelo):
+    Image carro2_cima = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_3_01_cima.png");
+    ImageResize (&carro2_cima, 50, 100);
+    Image carro2_direita = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_3_01_direita.png"); 
+    ImageResize(&carro2_direita, 100, 50);
+    Image carro2_esquerda = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_3_01_esquerda.png");
+    ImageResize(&carro2_direita, 100, 50);
+    Image carro2_baixo = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_3_01_baixo.png");
+    ImageResize(&carro2_baixo, 50, 100);
+
+    Texture2D text_carro2_cima = LoadTextureFromImage(carro2_cima);
+    Texture2D text_carro2_direita = LoadTextureFromImage(carro2_direita);
+    Texture2D text_carro2_esquerda = LoadTextureFromImage(carro2_esquerda);
+    Texture2D text_carro2_baixo = LoadTextureFromImage(carro2_baixo);
+
     //loop principal do jogo
-    while(!WindowShouldClose()){
+    while (!WindowShouldClose()){
         
-         
-        //essas duas variaveis estao no loop pois precisam ser trocadas, de acordo com o teclado
-        Rectangle car1Rectangle_destination = {xcarro1, ycarro1, carro1textura.width, carro1textura.height};
-        Rectangle car2Rectangle_destination = {xcarro2, ycarro2, carro2textura.width, carro2textura.height};
-        
-         if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-            DrawText("Colidiu", 5, 5, 25, BLACK);
-            contadorcolisaocarro1++;
-            contadorcolisaocarro2++;
-        }
-        
-        
-        if(IsKeyDown(KEY_RIGHT) && IsKeyUp(KEY_UP) && IsKeyUp(KEY_DOWN)){ // carrinho so indo para a direita
-            xcarro1 += 2.0f;
-            rotacaocarro1 = 90.0f;
-                if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-                    xcarro1 -= 6.0f;
-                }
-        }
-        if(IsKeyDown(KEY_RIGHT) && IsKeyDown(KEY_UP)){ //carrinho indo para a direita e para cima
-            xcarro1 += 2.0f;
-            ycarro1 -= 2.0f;
-            rotacaocarro1 = 45.0f;
-            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-                    xcarro1 -= 6.0f;
-                    ycarro1 += 6.0f;
-                }
-        }
-        if(IsKeyDown(KEY_RIGHT) && IsKeyDown(KEY_DOWN)){ //carrinho indo para a direita e para baixo
-            xcarro1 += 2.0f;
-            ycarro1 += 2.0f;
-            rotacaocarro1 = 135.0f;
-            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-                    xcarro1 -= 6.0f;
-                    ycarro1 -= 6.0f;
-                }
-        }
-        if(IsKeyDown(KEY_LEFT) && IsKeyUp(KEY_UP) && IsKeyUp(KEY_DOWN)){ //carrinho so indo para a esquerda
-            xcarro1 -= 2.0f;
-            rotacaocarro1 = 270.0f;
-            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-                    xcarro1 += 6.0f;
-                }
-        }
-        if(IsKeyDown(KEY_LEFT) && IsKeyDown(KEY_UP)){ //carrinho indo para a esquerda e para cima
-            xcarro1 -= 2.0f;
-            ycarro1 -= 2.0f;
-            rotacaocarro1 = 315.0f;
-            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-                    xcarro1 += 6.0f;
-                    ycarro1 += 6.0f;
-                }
-        }
-        if(IsKeyDown(KEY_LEFT) && IsKeyDown(KEY_DOWN)){ //carrinho indo para a esquerda e para baixo
-            ycarro1 += 2.0f;
-            xcarro1 -= 2.0f;
-            rotacaocarro1 = 225.0f;
-            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-                    xcarro1 += 6.0f;
-                    ycarro1 -= 6.0f;
-                }
-        }
-        if(IsKeyDown(KEY_UP) && IsKeyUp(KEY_LEFT) && IsKeyUp(KEY_RIGHT)){ //carrinho so indo para cima
-            ycarro1 -= 2.0f;
-            rotacaocarro1 = 0.0f;
-            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-                    ycarro1 += 6.0f;
-                }
-        }
-        if(IsKeyDown(KEY_DOWN) && IsKeyUp(KEY_LEFT) && IsKeyUp(KEY_RIGHT)){ //carrinho so indo para baixo
-            ycarro1 += 2.0f;
-            rotacaocarro1 = 180.0f;
-            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-                    ycarro1 -= 6.0f;
-                }
-        }
-        
-        if(IsKeyDown(KEY_D) && IsKeyUp(KEY_W) && IsKeyUp(KEY_S)){ // carrinho so indo para a direita
-            xcarro2 += 2.0f;
-            rotacaocarro2 = 90.0f;
-            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-                    xcarro2 -= 6.0f;
-                }
-        }
-        if(IsKeyDown(KEY_D) && IsKeyDown(KEY_W)){ //carrinho indo para a direita e para cima
-            xcarro2 += 2.0f;
-            ycarro2 -= 2.0f;
-            rotacaocarro2 = 45.0f;
-            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-                    xcarro2 -= 6.0f;
-                    ycarro2 += 6.0f;
-                }
-        }
-        if(IsKeyDown(KEY_D) && IsKeyDown(KEY_S)){ //carrinho indo para a direita e para baixo
-            xcarro2 += 2.0f;
-            ycarro2 += 2.0f;
-            rotacaocarro2 = 135.0f;
-            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-                    xcarro2 -= 6.0f;
-                    ycarro2 -= 6.0f;
-                }
-        }
-        if(IsKeyDown(KEY_A) && IsKeyUp(KEY_W) && IsKeyUp(KEY_S)){ //carrinho so indo para a esquerda
-            xcarro2 -= 2.0f;
-            rotacaocarro2 = 270.0f;
-            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-                    xcarro2 += 6.0f;
-                }
-        }
-        if(IsKeyDown(KEY_A) && IsKeyDown(KEY_W)){ //carrinho indo para a esquerda e para cima
-            xcarro2 -= 2.0f;
-            ycarro2 -= 2.0f;
-            rotacaocarro2 = 315.0f;
-            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-                    xcarro2 += 6.0f;
-                    ycarro2 += 6.0f;
-                }
-        }
-        if(IsKeyDown(KEY_A) && IsKeyDown(KEY_S)){ //carrinho indo para a esquerda e para baixo
-            ycarro2 += 2.0f;
-            xcarro2 -= 2.0f;
-            rotacaocarro2 = 225.0f;
-            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-                    xcarro2 += 6.0f;
-                    ycarro2 -= 6.0f;
-                }
-        }
-        if(IsKeyDown(KEY_W) && IsKeyUp(KEY_A) && IsKeyUp(KEY_D)){ //carrinho so indo para cima
-            ycarro2 -= 2.0f;
-            rotacaocarro2 = 0.0f;
-            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-                    ycarro2 += 6.0f;
-                }
-        }
-        if(IsKeyDown(KEY_S) && IsKeyUp(KEY_A) && IsKeyUp(KEY_D)){ //carrinho so indo para baixo
-        ycarro2 += 2.0f;
-        rotacaocarro2 = 180.0f;
-            if(CheckCollisionRecs(car1Rectangle_destination, car2Rectangle_destination)){
-                    ycarro2 -= 4.0f;
-                }
-    }
-       
-        
-        if(contadorcolisaocarro1==1) carro1textura = LoadTextureFromImage(carro1destruido1);
-        else if(contadorcolisaocarro1==2) carro1textura = LoadTextureFromImage(carro1destruido2);
-        else if(contadorcolisaocarro1==3) carro1textura = LoadTextureFromImage(carro1destruido3);
-        else if(contadorcolisaocarro1>=4) carro1textura = LoadTextureFromImage(carro1destruido4);
-        
-        if(contadorcolisaocarro2==1) carro2textura = LoadTextureFromImage(carro2destruido1);
-        else if(contadorcolisaocarro2==2) carro2textura = LoadTextureFromImage(carro2destruido2);
-        else if(contadorcolisaocarro2==3) carro2textura = LoadTextureFromImage(carro2destruido3);
-        else if(contadorcolisaocarro2>=4) carro2textura = LoadTextureFromImage(carro2destruido4);
-        
-        
-        
-    //desenhando:
-        BeginDrawing();
-        
+        veiculo carro1;
+        veiculo carro2;
+        inicializaCarro(&carro1);
+        inicializaCarro(&carro2);
+
+        while(IsKeyUp(KEY_ESCAPE)){ //possibilidade de criar um menu de pausa
+
+            BeginDrawing();
+
             ClearBackground(RAYWHITE);
             
-            //desenhando centro da tela:
-            DrawLine(ScreenWidth/2, 0, ScreenWidth/2, ScreenHeight, BLUE);
-            DrawLine(0, ScreenHeight/2, ScreenWidth, ScreenHeight/2, BLUE);
+            //movimentando os carros:
+            acaoCarro1 = movimentarCarro1(&carro1, mapa);
+            acaoCarro2 = movimentarCarro2(&carro2, mapa);
+            carro1_sheet.direcao = acaoCarro1;
+            carro2_sheet.direcao = acaoCarro2;
         
-            //desenhando modelo do carrinho 1:
-            DrawTexturePro(carro1textura, car1Rectangle_source, car1Rectangle_destination, car1Center, rotacaocarro1, RAYWHITE);
-            //desenhando modelo do carrinho2:
-            DrawTexturePro(carro2textura, car2Rectangle_source, car2Rectangle_destination, car2Center, rotacaocarro2, RAYWHITE);
+            switch(acaoCarro1){
+
+                case 1:
+                    textura1_atual = LoadTextureFromImage(carro1_cima);
+                    break;
+                case 2: 
+                    textura1_atual = LoadTextureFromImage(carro1_direita);
+                    break;
+                case 3:
+                    textura1_atual = LoadTextureFromImage(carro1_baixo);
+                    break;
+                case 4:
+                    textura1_atual = LoadTextureFromImage(carro1_esquerda);
+                    break;
+            }
+
+            switch(acaoCarro2){
+                
+                case 1:
+                    textura2_atual = LoadTextureFromImage(carro2_cima);
+                    break;
+                case 2: 
+                    textura2_atual = LoadTextureFromImage(carro2_cima);
+                    break;
+                case 3:
+                    textura2_atual = LoadTextureFromImage(carro2_cima);
+                    break;
+                case 4:
+                    textura2_atual = LoadTextureFromImage(carro2_cima);
+                    break;
+            }
             
-        EndDrawing();
+            //animando os carros:
+            animarCarro(&carro1_sheet, textura1_atual, textura_nitro, carro1);
+            animarCarro(&carro2_sheet, textura2_atual, textura_nitro, carro2);
+
+
+
+            EndDrawing();
+        }
     }
-    
-    UnloadTexture(carro1textura);
-    UnloadTexture(carro2textura);
+
+
+    UnloadImage(carro1_cima);
+    UnloadImage(carro1_direita);
+    UnloadImage(carro1_esquerda);
+    UnloadImage(carro1_baixo);
+    UnloadImage(carro2_cima);
+    UnloadImage(carro2_direita);
+    UnloadImage(carro2_esquerda);
+    UnloadImage(carro2_baixo);
+
+    UnloadTexture(text_carro1_cima);
+    UnloadTexture(text_carro1_direita);
+    UnloadTexture(text_carro1_esquerda);
+    UnloadTexture(text_carro1_baixo);
+    UnloadTexture(text_carro2_cima);
+    UnloadTexture(text_carro2_direita);
+    UnloadTexture(text_carro2_esquerda);
+    UnloadTexture(text_carro2_baixo);
+    UnloadTexture(textura1_atual);
+    UnloadTexture(textura2_atual);
+
+    CloseAudioDevice();
+
     CloseWindow();
     return 0;
-   
 }
