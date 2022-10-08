@@ -1,44 +1,22 @@
 #include "raylib.h"
-#include "animaco.h"
+#include "animacao.h"
 
-void animarCarro(spritesheet* carro, Texture2D* textura_carro, Texture2D* textura_nitro, veiculo carro){
+void animarCarro(spritesheet* carro_sheet, Texture2D* textura_carro, Texture2D* textura_nitro, veiculo carro){
 
-    if(carro.direcao == 1){ //carro esta indo para cima
-
-        if(carro.nitro == 0){
-
-        }
-        else{ //nitro ligado
-
-        }
+    //animar carro caso ele esteja na vertical ou na horizontal: 
+    if(carro_sheet.direcao == 1 || carro_sheet.direcao == 2 || carro_sheet.direcao == 3 || carro_sheet.direcao == 4){
+    DrawTexture(textura_carro, carro.hitboxveiculo.x, carro.hitboxveiculo.y, RAYWHITE);
     }
-    else if(carro.direcao == 3){ //carro esta indo para baixo
 
-        if(carro.nitro == 0){
-
-        }
-        else{ //nitro ligado
-
-        }
-    }
-    else if(carro.direcao == 4){ //carro esta indo para esquerda
-
-        if(carro.nitro == 0){
-
-        }
-        else{ //nitro ligado
-
-        }
-    }
-    else if(carro.direcao == 2){ //carro esta indo para direita
-
-        if(carro.nitro == 0){
-
-        }
-        else{ //nitro ligado
-
-        }
+    //animar carro caso ele esteja na diagonal (parametros mais complexos):
+    else{
 
     }
-            
+
+    //animar carro com o nitro ligado: 
+    if(carro.nitro == 1){
+
+
+
+    }
 }
