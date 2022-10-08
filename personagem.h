@@ -2,6 +2,9 @@
 #define personagem
 
 #include "raylib.h"
+#include "personagem.h"
+#include <math.h>
+#include <stdlib.h>
 
 typedef struct{
     double velocidade;
@@ -9,10 +12,6 @@ typedef struct{
     Vector2 posicaoveiculo;
 
 } veiculo;
-
-#include "jogador.h"
-#include <math.h>
-#include  <stdlib.h>
 
 void inicializaCarro(veiculo* carro);
 
