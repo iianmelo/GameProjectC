@@ -1,12 +1,14 @@
 #include "raylib.h"
 #include "personagem.h"
 
+int numero_bordas = 100;
+
 void inicializaCarro(veiculo* carro){
     
     (*carro).velocidade = 2; //velocidade que se alterará caso o nitro esteja ativo
     
-    (*carro).posicaoveiculo.x = 540; //posicao na qual o carro inicializado comecara (centro do carro)
-    (*carro).posicaoveiculo.y = 360;
+    (*carro).posicaoveiculo.x = GetScreenWidth()/2; //posicao na qual o carro inicializado comecara (centro do carro)
+    (*carro).posicaoveiculo.y = GetScreenHeight()/2;
 
     //hitbox (com o carro na vertical):
     (*carro).hitboxveiculo.x = (*carro).posicaoveiculo.x - 25;
@@ -21,8 +23,8 @@ void inicializaCarro(veiculo* carro){
 int colidiu(veiculo carro, Rectangle* mapa, int numero_bordas){
     int colidiu = 0;
     
-    for(int i=0, i<numero_bordas, i++){
-        if(CheckCollisionRecs(veiculo.hitboxveiculo, mapa[i])){
+    for(int i=0 ; i<numero_bordas ; i++){
+        if(CheckCollisionRecs(carro.hitboxveiculo, mapa[i])){
             colidiu = 1;
         }
     }
@@ -40,7 +42,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle mapa){
             (*carro1).hitboxveiculo.x -= (int)((*carro1).velocidade / sqrt(2));
             (*carro1).hitboxveiculo.y -= (int)((*carro1).velocidade / sqrt(2));
 
-            if(colidiu((*carro1), mapa, numero_bordas) == 1){
+            if(colidiu((*carro1), &mapa, numero_bordas) == 1){
                 (*carro1).posicaoveiculo.x += (int)((*carro1).velocidade / sqrt(2));
                 (*carro1).posicaoveiculo.y += (int)((*carro1).velocidade / sqrt(2));
                 (*carro1).hitboxveiculo.x += (int)((*carro1).velocidade / sqrt(2));
@@ -50,13 +52,13 @@ int movimentarCarro1(veiculo* carro1, Rectangle mapa){
             return 8;
         }
 
-        else if(IsKeyDown(KEY_RIGHT) && IsKeyUp(HEY_LEFT)){ //movimentando para cima e para direita
+        else if(IsKeyDown(KEY_RIGHT) && IsKeyUp(KEY_LEFT)){ //movimentando para cima e para direita
             (*carro1).posicaoveiculo.x += (int)((*carro1).velocidade / sqrt(2));
             (*carro1).posicaoveiculo.y -= (int)((*carro1).velocidade / sqrt(2));
             (*carro1).hitboxveiculo.x += (int) ((*carro1).velocidade / sqrt(2));
             (*carro1).hitboxveiculo.y -= (int) ((*carro1).velocidade / sqrt(2));
 
-            if(colidiu((*carro1), mapa, numero_bordas) == 1){
+            if(colidiu((*carro1), &mapa, numero_bordas) == 1){
                 (*carro1).posicaoveiculo.x -= (int)((*carro1).velocidade / sqrt(2));
                 (*carro1).posicaoveiculo.y += (int)((*carro1).velocidade / sqrt(2));
                 (*carro1).hitboxveiculo.x -= (int) ((*carro1).velocidade / sqrt(2));
@@ -75,7 +77,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle mapa){
             (*carro1).hitboxveiculo.width = 50;
             (*carro1).hitboxveiculo.height = 100;
 
-            if(colidiu((*carro1), mapa, numero_bordas) == 1){
+            if(colidiu((*carro1), &mapa, numero_bordas) == 1){
                 (*carro1).posicaoveiculo.y += (int)(*carro1).velocidade;
                 (*carro1).hitboxveiculo.y += (int)(*carro1).velocidade; 
             }
@@ -92,7 +94,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle mapa){
             (*carro1).hitboxveiculo.x -= (int)((*carro1).velocidade / sqrt(2));
             (*carro1).hitboxveiculo.y += (int)((*carro1).velocidade / sqrt(2));
 
-            if(colidiu((*carro1), mapa, numero_bordas) == 1){
+            if(colidiu((*carro1), &mapa, numero_bordas) == 1){
                 (*carro1).posicaoveiculo.x += (int)((*carro1).velocidade / sqrt(2));
                 (*carro1).posicaoveiculo.y -= (int)((*carro1).velocidade / sqrt(2));
                 (*carro1).hitboxveiculo.x += (int)((*carro1).velocidade / sqrt(2));
@@ -108,7 +110,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle mapa){
             (*carro1).hitboxveiculo.x += (int)((*carro1).velocidade / sqrt(2));
             (*carro1).hitboxveiculo.y += (int)((*carro1).velocidade / sqrt(2));
 
-            if(colidiu((*carro1), mapa, numero_bordas) == 1){
+            if(colidiu((*carro1), &mapa, numero_bordas) == 1){
                 (*carro1).posicaoveiculo.x -= (int)((*carro1).velocidade / sqrt(2));
                 (*carro1).posicaoveiculo.y -= (int)((*carro1).velocidade / sqrt(2));
                 (*carro1).hitboxveiculo.x -= (int)((*carro1).velocidade / sqrt(2));
@@ -127,7 +129,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle mapa){
             (*carro1).hitboxveiculo.width = 50;
             (*carro1).hitboxveiculo.height = 100;
 
-            if(colidiu((*carro1), mapa, numero_bordas) == 1){
+            if(colidiu((*carro1), &mapa, numero_bordas) == 1){
                 (*carro1).posicaoveiculo.y -= (int)(*carro1).velocidade;
                 (*carro1).hitboxveiculo.y -= (int)(*carro1).velocidade;
             }
@@ -145,7 +147,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle mapa){
         (*carro1).hitboxveiculo.width = 100;
         (*carro1).hitboxveiculo.height = 50;
 
-        if(colidiu((*carro1), mapa, numero_bordas) == 1){
+        if(colidiu((*carro1), &mapa, numero_bordas) == 1){
             (*carro1).posicaoveiculo.x -= (int)(*carro1).velocidade;
             (*carro1).hitboxveiculo.x -= (int)(*carro1).velocidade;
         }
@@ -162,7 +164,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle mapa){
         (*carro1).hitboxveiculo.width = 100;
         (*carro1).hitboxveiculo.height = 50;
 
-        if(colidiu((*carro1), mapa, numero_bordas) == 1){
+        if(colidiu((*carro1), &mapa, numero_bordas) == 1){
             (*carro1).posicaoveiculo.x += (int)(*carro1).velocidade;
             (*carro1).hitboxveiculo.x += (int)(*carro1).velocidade;
         }
@@ -181,7 +183,7 @@ int movimentarCarro2(veiculo* carro2, Rectangle mapa){
             (*carro2).hitboxveiculo.x -= (int)((*carro2).velocidade / sqrt(2));
             (*carro2).hitboxveiculo.y -= (int)((*carro2).velocidade / sqrt(2));
 
-            if(colidiu((*carro2), mapa, numero_bordas) == 1){
+            if(colidiu((*carro2), &mapa, numero_bordas) == 1){
                 (*carro2).posicaoveiculo.x += (int)((*carro2).velocidade / sqrt(2));
                 (*carro2).posicaoveiculo.y += (int)((*carro2).velocidade / sqrt(2));
                 (*carro2).hitboxveiculo.x += (int)((*carro2).velocidade / sqrt(2));
@@ -197,7 +199,7 @@ int movimentarCarro2(veiculo* carro2, Rectangle mapa){
             (*carro2).hitboxveiculo.x += (int)((*carro2).velocidade / sqrt(2));
             (*carro2).hitboxveiculo.y -= (int)((*carro2).velocidade / sqrt(2));
 
-            if(colidiu((*carro2), mapa, numero_bordas) == 1){
+            if(colidiu((*carro2), &mapa, numero_bordas) == 1){
                 (*carro2).posicaoveiculo.x -= (int)((*carro2).velocidade / sqrt(2));
                 (*carro2).posicaoveiculo.y += (int)((*carro2).velocidade / sqrt(2));
                 (*carro2).hitboxveiculo.x -= (int)((*carro2).velocidade / sqrt(2));
@@ -216,7 +218,7 @@ int movimentarCarro2(veiculo* carro2, Rectangle mapa){
             (*carro2).hitboxveiculo.width = 50;
             (*carro2).hitboxveiculo.height = 100;
            
-           if(colidiu((*carro2), mapa, numero_bordas) == 1){
+           if(colidiu((*carro2), &mapa, numero_bordas) == 1){
                 (*carro2).posicaoveiculo.y += (int)(*carro2).velocidade;
                 (*carro2).hitboxveiculo.y += (int)(*carro2).velocidade;    
             }
@@ -233,7 +235,7 @@ int movimentarCarro2(veiculo* carro2, Rectangle mapa){
             (*carro2).hitboxveiculo.x -= (int)((*carro2).velocidade / sqrt(2));
             (*carro2).hitboxveiculo.y += (int)((*carro2).velocidade / sqrt(2));
 
-            if(colidiu((*carro2), mapa, numero_bordas) == 1){
+            if(colidiu((*carro2), &mapa, numero_bordas) == 1){
                 (*carro2).posicaoveiculo.x += (int)((*carro2).velocidade / sqrt(2));
                 (*carro2).posicaoveiculo.y -= (int)((*carro2).velocidade / sqrt(2));
                 (*carro2).hitboxveiculo.x += (int)((*carro2).velocidade / sqrt(2));
@@ -249,7 +251,7 @@ int movimentarCarro2(veiculo* carro2, Rectangle mapa){
             (*carro2).hitboxveiculo.x += (int)((*carro2).velocidade / sqrt(2));
             (*carro2).hitboxveiculo.y += (int)((*carro2).velocidade / sqrt(2));
 
-            if(colidiu((*carro2), mapa, numero_bordas) == 1){
+            if(colidiu((*carro2), &mapa, numero_bordas) == 1){
                 (*carro2).posicaoveiculo.x -= (int)((*carro2).velocidade / sqrt(2));
                 (*carro2).posicaoveiculo.y -= (int)((*carro2).velocidade / sqrt(2));
                 (*carro2).hitboxveiculo.x -= (int)((*carro2).velocidade / sqrt(2));
@@ -268,7 +270,7 @@ int movimentarCarro2(veiculo* carro2, Rectangle mapa){
             (*carro2).hitboxveiculo.width = 50;
             (*carro2).hitboxveiculo.height = 100;
 
-            if(colidiu((*carro2), mapa, numero_bordas) == 1){
+            if(colidiu((*carro2), &mapa, numero_bordas) == 1){
                 (*carro2).posicaoveiculo.y -= (int)(*carro2).velocidade;
                 (*carro2).hitboxveiculo.y -= (int)(*carro2).velocidade; 
             }
@@ -286,7 +288,7 @@ int movimentarCarro2(veiculo* carro2, Rectangle mapa){
         (*carro2).hitboxveiculo.width = 100;
         (*carro2).hitboxveiculo.height = 50;
 
-        if(colidiu((*carro2), mapa, numero_bordas) == 1){
+        if(colidiu((*carro2), &mapa, numero_bordas) == 1){
             (*carro2).posicaoveiculo.x -= (int)(*carro2).velocidade;
             (*carro2).hitboxveiculo.x -= (int)(*carro2).velocidade;
         }
@@ -303,7 +305,7 @@ int movimentarCarro2(veiculo* carro2, Rectangle mapa){
         (*carro2).hitboxveiculo.width = 100;
         (*carro2).hitboxveiculo.height = 50;
 
-        if(colidiu((*carro2), mapa, numero_bordas) == 1){
+        if(colidiu((*carro2), &mapa, numero_bordas) == 1){
             (*carro2).posicaoveiculo.x += (int)(*carro2).velocidade;
             (*carro2).hitboxveiculo.x += (int)(*carro2).velocidade;
         }
