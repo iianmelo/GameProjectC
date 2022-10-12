@@ -1,6 +1,26 @@
 #include "raylib.h"
 #include "animacao.h"
 
+void startTimer(timer* timer, float tempo_ligado){
+
+    if(timer != NULL){
+        timer->tempo_duracao = tempo_ligado;
+    }
+}
+
+void updateTimer(timer* timer){
+
+    if(timer != NULL && timer->tempo_duracao > 0){
+        timer->tempo_duracao -= GetFrameTime();
+    }  
+}
+
+bool timerDone(timer* timer){
+    
+    if(timer != NULL){
+        return timer->tempo_duracao <= 0;
+    }
+}
 
 void animarCarro(spritesheetcarro* carro_sheet, Texture2D textura_carro, Texture2D textura_nitro, veiculo carro){
 
