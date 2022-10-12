@@ -5,6 +5,7 @@
 #include "animacao.h"
 
 int numero_bordas = 100; //numero da quantidade de retangulos do mapa
+int numero_nitros = 10; //numero da quantidade de retangulos que sao boosts de nitro
 int acaoCarro1;
 int acaoCarro2;
 
@@ -77,7 +78,10 @@ int main(){
             acaoCarro2 = movimentarCarro2(&carro2, mapa);
             carro1_sheet.direcao = acaoCarro1;
             carro2_sheet.direcao = acaoCarro2;
-        
+            //verificando se pegaram nitro:
+            carro1_sheet.nitro = pegouNitro(&carro1_sheet, &carro1, mapa, numero_bordas, numero_nitros);
+            carro1_sheet.nitro = pegouNitro(&carro2_sheet, &carro2, mapa, numero_bordas, numero_nitros);    
+
             switch(acaoCarro1){
 
                 case 1:
@@ -151,6 +155,7 @@ int main(){
     UnloadImage(carro2_direita);
     UnloadImage(carro2_esquerda);
     UnloadImage(carro2_baixo);
+    UnloadImage(nitro_imagem);
 
     UnloadTexture(text_carro1_cima);
     UnloadTexture(text_carro1_direita);
@@ -162,6 +167,7 @@ int main(){
     UnloadTexture(text_carro2_baixo);
     UnloadTexture(textura1_atual);
     UnloadTexture(textura2_atual);
+    UnloadTexture(nitro);
 
     CloseAudioDevice();
 
