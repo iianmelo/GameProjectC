@@ -7,8 +7,8 @@
 float tempo_nitro_ligado = 10.0; 
 float velocidade_com_nitro = 5;
 float velocidade_sem_nitro = 2;
-int numero_bordas = 100; //numero da quantidade de retangulos do mapa
-int numero_nitros = 10; //numero da quantidade de retangulos que sao boosts de nitro
+int numero_bordas = 16; //numero da quantidade de retangulos do mapa
+int numero_nitros = 8; //numero da quantidade de retangulos que sao boosts de nitro
 int acaoCarro1;
 int acaoCarro2;
 
