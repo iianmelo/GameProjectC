@@ -2,7 +2,7 @@
 #include "personagem.h"
 #include "animacao.h"
 
-int numero_bordas = 100;
+int numero_bordas = 16;
 
 void inicializaCarro(veiculo* carro){
     
