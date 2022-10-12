@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "personagem.h"
+#include "animacao.h"
 
 int numero_bordas = 100;
 
@@ -30,6 +31,18 @@ int colidiu(veiculo carro, Rectangle* mapa, int numero_bordas){
     }
 
     return colidiu;
+}
+
+int pegouNitro(spritesheetcarro* carro_sheet, veiculo* carro, Rectangle mapa, int numero_bordas, int numero_nitros){
+    int pegou = 0;
+    for(int i=numero_bordas; i<numero_nitros, i++){
+        if(CheckCollisionRecs(carro->hitboxveiculo, mapa[i])){
+            pegou = 1;
+            carro->velocidade = 5 //se pegou nitro, entao a velocidade dele aumenta 
+        }
+    }
+
+    return pegou;
 }
 
 int movimentarCarro1(veiculo* carro1, Rectangle mapa){
