@@ -1,6 +1,5 @@
 #include "raylib.h"
 #include "personagem.h"
-#include "animacao.h"
 
 Texture2D abrirMapa();
 
