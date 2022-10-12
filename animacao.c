@@ -5,6 +5,7 @@
 void animarCarro(spritesheetcarro* carro_sheet, Texture2D textura_carro, Texture2D textura_nitro, veiculo carro){
 
     Vector2 centro_carro = {carro.posicaoveiculo.x, carro.posicaoveiculo.y};
+    Rectangle nitro_source = {0, 0, 12, 30};
 
     //animar carro caso ele esteja na vertical ou na horizontal: 
     if((*carro_sheet).direcao == 1 || (*carro_sheet).direcao == 2 || (*carro_sheet).direcao == 3 || (*carro_sheet).direcao == 4){
@@ -49,7 +50,10 @@ void animarCarro(spritesheetcarro* carro_sheet, Texture2D textura_carro, Texture
         
         //nitro ligado:
         if((*carro_sheet).nitro == 1){
-
+            Rectangle nitro1_destination = {carro.posicaoveiculo.x - 25, carro.posicaoveiculo.y + 50, 12, 30};
+            Rectangle nitro2_destination = {carro.posicaoveiculo.x + 25, carro.posicaoveiculo.y + 50, 12, 30};
+            DrawTexturePro(textura_nitro, nitro_source, nitro1_destination, centro_carro, 45.0f, RAYWHITE);
+            DrawTexturePro(textura_nitro, nitro_source, nitro2_destination, centro_carro, 45.0f, RAYWHITE);
         }
     }
 
@@ -58,7 +62,10 @@ void animarCarro(spritesheetcarro* carro_sheet, Texture2D textura_carro, Texture
 
         //nitro ligado:
         if((*carro_sheet).nitro == 1){
-            
+            Rectangle nitro1_destination = {carro.posicaoveiculo.x - 25, carro.posicaoveiculo.y + 50, 12, 30};
+            Rectangle nitro2_destination = {carro.posicaoveiculo.x + 25, carro.posicaoveiculo.y + 50, 12, 30};
+            DrawTexturePro(textura_nitro, nitro_source, nitro1_destination, centro_carro, 315.0f, RAYWHITE);
+            DrawTexturePro(textura_nitro, nitro_source, nitro2_destination, centro_carro, 315.0f, RAYWHITE);
         }
     }
 
@@ -67,7 +74,10 @@ void animarCarro(spritesheetcarro* carro_sheet, Texture2D textura_carro, Texture
 
         //nitro ligado:
         if((*carro_sheet).nitro == 1){
-            
+            Rectangle nitro1_destination = {carro.posicaoveiculo.x - 25, carro.posicaoveiculo.y + 50, 12, 30};
+            Rectangle nitro2_destination = {carro.posicaoveiculo.x + 25, carro.posicaoveiculo.y + 50, 12, 30};
+            DrawTexturePro(textura_nitro, nitro_source, nitro1_destination, centro_carro, 225.0f, RAYWHITE);
+            DrawTexturePro(textura_nitro, nitro_source, nitro2_destination, centro_carro, 225.0f, RAYWHITE);
         }
     }
 
@@ -76,7 +86,10 @@ void animarCarro(spritesheetcarro* carro_sheet, Texture2D textura_carro, Texture
 
         //nitro ligado:
         if((*carro_sheet).nitro == 1){
-            
+            Rectangle nitro1_destination = {carro.posicaoveiculo.x - 25, carro.posicaoveiculo.y + 50, 12, 30};
+            Rectangle nitro2_destination = {carro.posicaoveiculo.x + 25, carro.posicaoveiculo.y + 50, 12, 30};
+            DrawTexturePro(textura_nitro, nitro_source, nitro1_destination, centro_carro, 135.0f , RAYWHITE);
+            DrawTexturePro(textura_nitro, nitro_source, nitro2_destination, centro_carro, 135.0f, RAYWHITE);
         }
     }
 
