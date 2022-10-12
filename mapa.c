@@ -151,5 +151,18 @@ int ColisaoLimitesPista(Rectangle* mapa, Texture2D mapa){
    mapa[25].width = 83;
    mapa[25].height = 49;
 
-}
+//linha de partida
 
+   mapa[26].x = 1471;
+   mapa[26].y = 75;
+   mapa[26].width = 43;
+   mapa[26].height = 151;
+
+//linha de chegada
+
+   mapa[27].x = 1604;
+   mapa[27].y = 291;
+   mapa[27].width = 152;
+   mapa[27].height = 49; 
+
+}
