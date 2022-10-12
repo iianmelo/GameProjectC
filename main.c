@@ -4,6 +4,9 @@
 #include "personagem.h"
 #include "animacao.h"
 
+float tempo_nitro_ligado = 10.0; 
+float velocidade_com_nitro = 5;
+float velocidade_sem_nitro = 2;
 int numero_bordas = 100; //numero da quantidade de retangulos do mapa
 int numero_nitros = 10; //numero da quantidade de retangulos que sao boosts de nitro
 int acaoCarro1;
@@ -18,6 +21,8 @@ int main(){
     int ScreenWid = GetScreenWidth();
     int ScreenHei = GetScreenHeight();
 
+    timer timercarro1 = {0};
+    timer timercarro2 = {0};
     spritesheetcarro carro1_sheet = {0, 0.0f, 1}; //nitro comeca desligado e o carro1 nasce apontando para cima
     spritesheetcarro carro2_sheet = {0, 0.0f, 1}; //nitro comeca desligado e o carro2 nasce apontando para cima
     Rectangle mapa = {0, 0, ScreenWid, ScreenHei};
@@ -69,10 +74,6 @@ int main(){
 
         while(IsKeyUp(KEY_ESCAPE)){ //possibilidade de criar um menu de pausa
 
-            BeginDrawing();
-
-            ClearBackground(RAYWHITE);
-            
             //movimentando os carros:
             acaoCarro1 = movimentarCarro1(&carro1, mapa);
             acaoCarro2 = movimentarCarro2(&carro2, mapa);
@@ -80,8 +81,32 @@ int main(){
             carro2_sheet.direcao = acaoCarro2;
             //verificando se pegaram nitro:
             carro1_sheet.nitro = pegouNitro(&carro1_sheet, &carro1, mapa, numero_bordas, numero_nitros);
-            carro1_sheet.nitro = pegouNitro(&carro2_sheet, &carro2, mapa, numero_bordas, numero_nitros);    
+            carro1_sheet.nitro = pegouNitro(&carro2_sheet, &carro2, mapa, numero_bordas, numero_nitros);
 
+            //caso peguem o nitro, timer comeca e velocidade aumenta
+            if(carro1_sheet.nitro == 1){
+                startTimer(&timercarro1, tempo_nitro_ligado);
+                carro1.velocidade = velocidade;
+            }    
+            if(carro2_sheet.nitro == 1){
+                startTimer(&timercarro2, tempo_nitro_ligado);
+                carro2.velocidade = velocidade_com_nitro;
+            }
+            
+            updateTimer(&timercarro1);
+            updateTimer(&timercarro2);
+            
+            //se o nitro acabar velocidade diminui
+            if(carro1_sheet.nitro == 1 && timerDone(&timercarro1)){
+                carro1.velocidade = velocidade_sem_nitro;
+                carro1_sheet.nitro = 0;
+            }
+            if(carro2_sheet.nitro == 1 && timerDone(&timercarro2)){
+                carro2.velocidade = velocidade_sem_nitro;
+                carro2_sheet.nitro = 0;
+            }
+    
+            
             switch(acaoCarro1){
 
                 case 1:
@@ -137,7 +162,10 @@ int main(){
                     textura2_atual = LoadTextureFromImage(carro2_cima);
                     break;
             }
-            
+
+            BeginDrawing();
+            ClearBackground(RAYWHITE);
+
             //animando os carros:
             animarCarro(&carro1_sheet, textura1_atual, nitro, carro1);
             animarCarro(&carro2_sheet, textura2_atual, nitro, carro2);
