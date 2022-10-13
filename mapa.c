@@ -10,7 +10,7 @@ Texture2D abrirmapa(){
 
 bool checarLimiteCamera();
 
-int ColisaoLimitesPista(Rectangle* mapa, Texture2D mapa){
+void ColisaoLimitesPista(Rectangle barreiras[], Texture2D mapa){
 
     //Retangulos do limite da pista
     Rectangle barreiras[18];
@@ -107,7 +107,9 @@ int ColisaoLimitesPista(Rectangle* mapa, Texture2D mapa){
     barreiras[17].width = 83;
     barreiras[17].height = 49;
 
+}
     //nitros (moedas)
+void LocalizaNitros(Rectangle nitros[], Texture2D mapa){
     Rectangle nitros[5];
 
     nitros[0].x = 1002;
@@ -134,9 +136,10 @@ int ColisaoLimitesPista(Rectangle* mapa, Texture2D mapa){
     nitros[4].y = 991;
     nitros[4].width = 44;
     nitros[4].height = 44;
+}
 
     //jumper que aumenta a velocidade
-
+void LocalizaJumper(Rectangle jumper[], Texture2D mapa){
     Rectangle jumper[3];
 
     jumper[0].x = 767;
@@ -153,7 +156,8 @@ int ColisaoLimitesPista(Rectangle* mapa, Texture2D mapa){
     jumper[2].y = 86;
     jumper[2].width = 83;
     jumper[2].height = 49;
-
+}
+ 
     //linha de partida
     Rectangle linhaDePartida;
     linhaDePartida.x = 1471;
@@ -169,4 +173,4 @@ int ColisaoLimitesPista(Rectangle* mapa, Texture2D mapa){
     linhaDeChegada.width = 152;
     linhaDeChegada.height = 49; 
 
-    }
+
