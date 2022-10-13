@@ -2,17 +2,10 @@
 #define personagem
 
 #include "raylib.h"
-#include "personagem.h"
+#include "personagem.c"
 #include "animacao.h"
 #include <math.h>
 #include <stdlib.h>
-
-typedef struct{
-    float velocidade;
-    Rectangle hitboxveiculo;
-    Vector2 posicaoveiculo;
-
-} veiculo;
 
 void inicializaCarro(veiculo* carro);
 
