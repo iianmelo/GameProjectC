@@ -1,11 +1,11 @@
 #ifndef menu
 #define menu
 
-#include "menu.h"
+#include "menu.c"
 
-void iniciarMenu();
-void abrirExplicacao();
-void iniciandoJogo();
+void iniciarMenu(Texture2D imagemMenu);
+void abrirExplicacao(Texture2D imagemComoJogar);
+void iniciandoJogo(Texture2D imagemIniciando);
 //void paraOndeIr(int aux);
 //void fechamento();
 
