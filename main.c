@@ -6,6 +6,7 @@
 #include "raylib.h"
 #include "menu.h"
 #include "mapa.h"
+#include "fimDoJogo.h"
 
 float tempo_nitro_ligado = 10.0; 
 float velocidade_com_nitro = 5;
@@ -192,38 +193,45 @@ int main(){
                 animarCarro(&carro1_sheet, textura1_atual, nitro, carro1);
                 animarCarro(&carro2_sheet, textura2_atual, nitro, carro2);
             }
+            if((*carro1).posicaoveiculo.y == 390){
+                mostrarTelaFinal1(imagemVencedor1);
+            }
+            else if((*carro2).posicao.y == 390){
+                mostrarTelaFinal2(imagemVencedor2);
+            }
             EndDrawing();
         }
     }
+    if(aux==7){
+        UnloadImage(mapa_corrida);
+        UnloadImage(carro1_cima);
+        UnloadImage(carro1_direita);
+        UnloadImage(carro1_esquerda);
+        UnloadImage(carro1_baixo);
+        UnloadImage(carro2_cima);
+        UnloadImage(carro2_direita);
+        UnloadImage(carro2_esquerda);
+        UnloadImage(carro2_baixo);
+        UnloadImage(nitro_imagem);
 
-    UnloadImage(mapa_corrida);
-    UnloadImage(carro1_cima);
-    UnloadImage(carro1_direita);
-    UnloadImage(carro1_esquerda);
-    UnloadImage(carro1_baixo);
-    UnloadImage(carro2_cima);
-    UnloadImage(carro2_direita);
-    UnloadImage(carro2_esquerda);
-    UnloadImage(carro2_baixo);
-    UnloadImage(nitro_imagem);
+        UnloadTexture(imagemMenu);
+        UnloadTexture(imagemIniciando);
+        UnloadTexture(imagemComoJogar);
+        UnloadTexture(text_carro1_cima);
+        UnloadTexture(text_carro1_direita);
+        UnloadTexture(text_carro1_esquerda);
+        UnloadTexture(text_carro1_baixo);
+        UnloadTexture(text_carro2_cima);
+        UnloadTexture(text_carro2_direita);
+        UnloadTexture(text_carro2_esquerda);
+        UnloadTexture(text_carro2_baixo);
+        UnloadTexture(textura1_atual);
+        UnloadTexture(textura2_atual);
+        UnloadTexture(nitro);
 
-    UnloadTexture(imagemMenu);
-    UnloadTexture(imagemIniciando);
-    UnloadTexture(imagemComoJogar);
-    UnloadTexture(text_carro1_cima);
-    UnloadTexture(text_carro1_direita);
-    UnloadTexture(text_carro1_esquerda);
-    UnloadTexture(text_carro1_baixo);
-    UnloadTexture(text_carro2_cima);
-    UnloadTexture(text_carro2_direita);
-    UnloadTexture(text_carro2_esquerda);
-    UnloadTexture(text_carro2_baixo);
-    UnloadTexture(textura1_atual);
-    UnloadTexture(textura2_atual);
-    UnloadTexture(nitro);
+        CloseAudioDevice();
 
-    CloseAudioDevice();
-
-    CloseWindow();
+        CloseWindow();
+    }
     return 0;
 }
