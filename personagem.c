@@ -2,6 +2,7 @@
 #include "personagem.h"
 #include "animacao.h"
 #include <stdbool.h>
+#include "mapa.h"
 
 int numero_bordas = 18;
 
