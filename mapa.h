@@ -3,8 +3,6 @@
 
 Texture2D abrirMapa();
 
-bool checarLimitesDaCamera();
-
 void ColisaoLimitesPista(Rectangle barreiras[], Texture2D mapa);
 
 void LocalizaNitros(Rectangle nitros[], Texture2D mapa);
