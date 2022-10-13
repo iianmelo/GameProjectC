@@ -1,27 +1,27 @@
 //inicialização
 InitAudioDevice();
-Music music = LoadMusicStream("");
-    Music hakai = LoadMusicStream("");
-    PlayMusicStream(music);
-    PlayMusicStream(hakai);
+Music MusicaFundo = LoadMusicStream("");
+    Music MusicaNitro = LoadMusicStream("");
+    PlayMusicStream(MusicaFundo);
+    PlayMusicStream(MusicaNitro);
 bool pause = false;
 //
 //
  loop principal na area de update:
-UpdateMusicStream(music); 
+UpdateMusicStream(MusicaFundo); 
 //
 //
 dentro do if do nitro em ambos os carros coloca:
-PauseMusicStream(music);
-UpdateMusicStream(hakai);
+PauseMusicStream(MusicaFundo);
+UpdateMusicStream(MusicaNitro);
 //
 //
 fora do if do nitro:
-ResumeMusicStream(music);
+ResumeMusicStream(MusicaFundo);
 //
 //
 parte final(De-Initialization):
-UnloadMusicStream(music); 
-UnloadMusicStream(hakai);
+UnloadMusicStream(MusicaFundo); 
+UnloadMusicStream(MusicaNitro);
 CloseAudioDevice();
 //
