@@ -22,31 +22,31 @@ void inicializaCarro(veiculo* carro){
 
 }
 
-int colidiu(veiculo carro, Rectangle* mapa, int numero_bordas){
+int colidiu(veiculo carro, Rectangle *mapa, int numero_bordas){
     int colidiu = 0;
     
     for(int i=0 ; i<numero_bordas ; i++){
-        //if(CheckCollisionRecs(carro.hitboxveiculo, mapa[i])){
-            //colidiu = 1;
-        //}
+        if(CheckCollisionRecs(carro.hitboxveiculo, mapa[i])){
+            colidiu = 1;
+        }
     }
 
     return colidiu;
 }
 
-int pegouNitro(spritesheetcarro* carro_sheet, veiculo* carro, Rectangle mapa, int numero_bordas, int numero_nitros){
+int pegouNitro(spritesheetcarro* carro_sheet, veiculo* carro, Rectangle* nitros, int numero_nitros){
     
     int pegou = 0;
-    for(int i=numero_bordas; i<numero_nitros; i++){
-        //if(CheckCollisionRecs((*carro).hitboxveiculo, mapa[i])){
-            //pegou = 1;
-        //}
+    for(int i=0; i<numero_nitros; i++){
+        if(CheckCollisionRecs((*carro).hitboxveiculo, nitros[i])){
+            pegou = 1;
+        }
     }
 
     return pegou;
 }
 
-int movimentarCarro1(veiculo* carro1, Rectangle mapa){
+int movimentarCarro1(veiculo* carro1, Rectangle* mapa){
     
     if(IsKeyDown(KEY_UP)){
 
@@ -188,7 +188,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle mapa){
     return 0;
 }
 
-int movimentarCarro2(veiculo* carro2, Rectangle mapa){
+int movimentarCarro2(veiculo* carro2, Rectangle* mapa){
 
     if(IsKeyDown(KEY_W)){
 
