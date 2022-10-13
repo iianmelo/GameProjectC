@@ -1,27 +1,38 @@
 //inicialização
 InitAudioDevice();
+Music MusicaMenu= LoadMusicStream(""); 
 Music MusicaFundo= LoadMusicStream(""); 
-
-/* dentro dos parenteses coloca o caminho do arquivo, junto com o nome dele seguido do .mp3 ex:
-"C:/Users/thaua/Downloads/Overtaken.mp3" , sempre com as barras pra esse lado*/
-
-Music MusicaNitro = LoadMusicStream(""); 
+Music MusicaNitro = LoadMusicStream("");
 Music MusicaBatida = LoadMusicStream("");
 Music MusicaMoeda = LoadMusicStream("");
+Music MusicaVencedor1 = LoadMusicStream("");
+Music MusicaVencedor2 = LoadMusicStream("");
 
-
+PlayMusicStream(MusicaMenu);
 PlayMusicStream(MusicaFundo);
 PlayMusicStream(MusicaNitro);
 PlayMusicStream(MusicaBatida);
 PlayMusicStream(MusicaMoeda);
+PlayMusicStream(MusicaVencedor1);
+PlayMusicStream(MusicaVencedor2);
+
+bool pause = false;
+//
+parte do Menu:
+UpdateMusicStream(MusicaMenu); 
+SetMasterVolume(0.7);
 
 //
- loop principal na area de update
+ loop principal na area de update:
+PauseMusicStream(MusicaMenu);
 UpdateMusicStream(MusicaFundo); 
 SetMasterVolume(0.7);
 //
 
+
+//
 dentro do if do nitro do coloca:
+
 UpdateMusicStream(MusicaNitro);
 SetMasterVolume(1.0);
 //
@@ -33,10 +44,26 @@ dentro if moeda:
 UpdateMusicStream(MusicaMoeda);
 SetMasterVolume(1.0);
 //
+dentro if vencedor carro 1:
+PauseMusicStream(MusicaFundo);
+UpdateMusicStream(MusicaVencedor1);
+
+dentro  if vecedor carro 2:
+PauseMusicStream(MusicaFundo);
+UpdateMusicStream(MusicaVencedor2);
+
+
+
 parte final:
+UnloadMusicStream(MusicaMenu); 
 UnloadMusicStream(MusicaFundo); 
 UnloadMusicStream(MusicaNitro);
 UnloadMusicStream(MusicaBatida); 
 UnloadMusicStream(MusicaMoeda); 
+UnloadMusicStream(MusicaVencedor1); 
+UnloadMusicStream(MusicaVencedor2); 
     CloseAudioDevice();
 //
+
+
+
