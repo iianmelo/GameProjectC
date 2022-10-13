@@ -1,48 +1,10 @@
 #include <stdio.h>
-#include <raylib.h>
+#include "raylib.h"
 #include "menu.h"
 
-int flagMenu = 0;
-
-Texture2D imagemMenu;
-Texture2D imagemComoJogar;
-Texture2D imagemIniciando;
 int aux;
 
-int main(){
-
-    //nt flagMenu = 0;
-    InitWindow(screenWidth,screenHeight, "oiiiiii SOS DESESPERO CRYING"); //tamanho da tela
-    SetTargetFPS(60); 
-    aux=1;
-    //declarando imagens
-    
-    imagemMenu = LoadTexture("menu_inicial.png");
-    imagemComoJogar = LoadTexture("como_jogar.png");
-    imagemIniciando = LoadTexture("iniciandonovo.png");
-
-
-    while(!WindowShouldClose()){ 
-        BeginDrawing();
-        ClearBackground(BLACK);
-        if(aux==1) {
-            iniciarMenu();
-        }else if(aux==2){
-            iniciandoJogo();
-        }else if(aux==3){
-            abrirExplicacao();
-        }
-        EndDrawing();   
-    }
-
-    //fechando as coisas
-    CloseWindow();
-    UnloadTexture(imagemMenu);
-    UnloadTexture(imagemIniciando);
-    UnloadTexture(imagemComoJogar);
-}
-
-void iniciarMenu(){
+void iniciarMenu(Texture2D imagemMenu){
     imagemMenu = LoadTexture("menu_inicial.png");
     DrawTexture(imagemMenu,0,0, RAYWHITE); //isso aqui é pra desenhar no centro da tela
 
@@ -55,7 +17,7 @@ void iniciarMenu(){
     }
 }
 
-void abrirExplicacao(){
+void abrirExplicacao(Texture2D imagemComoJogar){
     imagemComoJogar = LoadTexture("como_jogar.png");
     DrawTexture(imagemComoJogar,0,0, RAYWHITE);
     if(IsKeyDown(KEY_M)){
@@ -63,12 +25,14 @@ void abrirExplicacao(){
     }
 }
 
-void iniciandoJogo(){
+void iniciandoJogo(Texture2D imagemIniciando){
     //desenhar o que vai aparecer agora
+    imagemIniciando = LoadTexture("iniciandonovo.png");
     DrawTexture(imagemIniciando,0,0, RAYWHITE);
 
     //agora para o jogo comecar
     if(IsKeyDown(KEY_BACKSPACE)){
+        aux=4;
         //colocar a função que inicia o jogo ( pista ja com os carrinhos para o usuario jogar)
     }
 
