@@ -3,7 +3,7 @@
 #include "animacao.h"
 #include <stdbool.h>
 
-int numero_bordas = 100;
+int numero_bordas = 18;
 
 void inicializaCarro(veiculo* carro){
     
