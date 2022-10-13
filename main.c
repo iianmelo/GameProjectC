@@ -5,6 +5,7 @@
 #include "animacao.h"
 #include "raylib.h"
 #include "menu.h"
+#include "mapa.h"
 
 float tempo_nitro_ligado = 10.0; 
 float velocidade_com_nitro = 5;
