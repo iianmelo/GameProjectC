@@ -8,8 +8,8 @@ void inicializaCarro(veiculo* carro){
     
     (*carro).velocidade = 2; //velocidade que se alterará caso o nitro esteja ativo
     
-    (*carro).posicaoveiculo.x = GetScreenWidth()/2; //posicao na qual o carro inicializado comecara (centro do carro)
-    (*carro).posicaoveiculo.y = GetScreenHeight()/2;
+    (*carro).posicaoveiculo.x = 1553; //GetScreenWidth()/2 //posicao na qual o carro inicializado comecara (centro do carro)
+    (*carro).posicaoveiculo.y = 109; //GetScreenHeight()/2;
 
     //hitbox (com o carro na vertical):
     (*carro).hitboxveiculo.x = (*carro).posicaoveiculo.x - 25;
