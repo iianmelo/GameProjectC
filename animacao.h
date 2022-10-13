@@ -11,6 +11,6 @@ void updateTimer(timer* timer);
 
 bool timerDone(timer* timer);
 
-void animarCarro(spritesheetcarro* carro_sheet, Texture2D textura_carro, Texture2D textura_nitro, veiculo carro);
+void animarCarro(spritesheetcarro* carro_sheet, Texture2D textura_carro, Texture2D textura_nitro, veiculo* carro);
 
 #endif
