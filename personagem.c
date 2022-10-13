@@ -1,15 +1,16 @@
 #include "raylib.h"
 #include "personagem.h"
 #include "animacao.h"
+#include <stdbool.h>
 
-int numero_bordas = 18;
+int numero_bordas = 100;
 
 void inicializaCarro(veiculo* carro){
     
     (*carro).velocidade = 2; //velocidade que se alterará caso o nitro esteja ativo
     
-    (*carro).posicaoveiculo.x = 1553; //GetScreenWidth()/2 //posicao na qual o carro inicializado comecara (centro do carro)
-    (*carro).posicaoveiculo.y = 109; //GetScreenHeight()/2;
+    (*carro).posicaoveiculo.x = GetScreenWidth()/2; //posicao na qual o carro inicializado comecara (centro do carro)
+    (*carro).posicaoveiculo.y = GetScreenHeight()/2;
 
     //hitbox (com o carro na vertical):
     (*carro).hitboxveiculo.x = (*carro).posicaoveiculo.x - 25;
@@ -25,9 +26,9 @@ int colidiu(veiculo carro, Rectangle* mapa, int numero_bordas){
     int colidiu = 0;
     
     for(int i=0 ; i<numero_bordas ; i++){
-        if(CheckCollisionRecs(carro.hitboxveiculo, mapa[i])){
-            colidiu = 1;
-        }
+        //if(CheckCollisionRecs(carro.hitboxveiculo, mapa[i])){
+            //colidiu = 1;
+        //}
     }
 
     return colidiu;
@@ -36,10 +37,10 @@ int colidiu(veiculo carro, Rectangle* mapa, int numero_bordas){
 int pegouNitro(spritesheetcarro* carro_sheet, veiculo* carro, Rectangle mapa, int numero_bordas, int numero_nitros){
     
     int pegou = 0;
-    for(int i=numero_bordas; i<numero_nitros, i++){
-        if(CheckCollisionRecs(carro->hitboxveiculo, mapa[i])){
-            pegou = 1;
-        }
+    for(int i=numero_bordas; i<numero_nitros; i++){
+        //if(CheckCollisionRecs((*carro).hitboxveiculo, mapa[i])){
+            //pegou = 1;
+        //}
     }
 
     return pegou;
@@ -184,6 +185,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle mapa){
 
         return 4;
     }
+    return 0;
 }
 
 int movimentarCarro2(veiculo* carro2, Rectangle mapa){
@@ -325,4 +327,5 @@ int movimentarCarro2(veiculo* carro2, Rectangle mapa){
 
         return 4;
     }
+    return 0;
 }
