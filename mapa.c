@@ -8,7 +8,6 @@ Texture2D abrirmapa(){
     return mapa_imagem;
 }
 
-bool checarLimiteCamera();
 
 void ColisaoLimitesPista(Rectangle mapa[], Texture2D mapa_imagem){
 
