@@ -5,5 +5,9 @@ Texture2D abrirMapa();
 
 bool checarLimitesDaCamera();
 
-int colidiu(veiculo carro, Rectangle* mapa, int numero_bordas);
+void ColisaoLimitesPista(Rectangle barreiras[], Texture2D mapa);
+
+void LocalizaNitros(Rectangle nitros[], Texture2D mapa);
+
+void LocalizaJumper(Rectangle jumper[], Texture2D mapa);
 
