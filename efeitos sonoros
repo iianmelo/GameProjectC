@@ -23,7 +23,7 @@ UpdateMusicStream(MusicaMenu);
 SetMasterVolume(0.7);
 
 //
- loop principal na area de update:
+parte que começa o jogo em si
 PauseMusicStream(MusicaMenu);
 UpdateMusicStream(MusicaFundo); 
 SetMasterVolume(0.7);
