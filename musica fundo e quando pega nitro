@@ -1,27 +1,42 @@
 //inicialização
 InitAudioDevice();
-Music MusicaFundo = LoadMusicStream("");
-    Music MusicaNitro = LoadMusicStream("");
-    PlayMusicStream(MusicaFundo);
-    PlayMusicStream(MusicaNitro);
-bool pause = false;
+Music MusicaFundo= LoadMusicStream(""); 
+
+/* dentro dos parenteses coloca o caminho do arquivo, junto com o nome dele seguido do .mp3 ex:
+"C:/Users/thaua/Downloads/Overtaken.mp3" , sempre com as barras pra esse lado*/
+
+Music MusicaNitro = LoadMusicStream(""); 
+Music MusicaBatida = LoadMusicStream("");
+Music MusicaMoeda = LoadMusicStream("");
+
+
+PlayMusicStream(MusicaFundo);
+PlayMusicStream(MusicaNitro);
+PlayMusicStream(MusicaBatida);
+PlayMusicStream(MusicaMoeda);
+
 //
-//
- loop principal na area de update:
+ loop principal na area de update
 UpdateMusicStream(MusicaFundo); 
+SetMasterVolume(0.7);
 //
-//
-dentro do if do nitro em ambos os carros coloca:
-PauseMusicStream(MusicaFundo);
+
+dentro do if do nitro do coloca:
 UpdateMusicStream(MusicaNitro);
+SetMasterVolume(1.0);
 //
+dentro do if batida:
+UpdateMusicStream(MusicaBatida);
+SetMasterVolume(1.0);
 //
-fora do if do nitro:
-ResumeMusicStream(MusicaFundo);
+dentro if moeda:
+UpdateMusicStream(MusicaMoeda);
+SetMasterVolume(1.0);
 //
-//
-parte final(De-Initialization):
+parte final:
 UnloadMusicStream(MusicaFundo); 
 UnloadMusicStream(MusicaNitro);
-CloseAudioDevice();
+UnloadMusicStream(MusicaBatida); 
+UnloadMusicStream(MusicaMoeda); 
+    CloseAudioDevice();
 //
