@@ -107,10 +107,10 @@ void ColisaoLimitesPista(Rectangle barreiras[], Texture2D mapa_imagem){
     barreiras[17].height = 49;
     
     //barreira que impede o carro de ir pelo sentido contrario
-    barreiras[18].x = 1607;
-    barreiras[18].y = 198;
-    barreiras[18].width = 138;
-    barreiras[18].height = 57;
+    barreiras[18].x = 1597;
+    barreiras[18].y = 237;
+    barreiras[18].width = 157;
+    barreiras[18].height = 39;
 
 }
     //nitros (moedas)
