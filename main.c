@@ -21,11 +21,28 @@ int main(){
 
     InitWindow(GetScreenWidth(), GetScreenHeight(), "IP Racers");
     ToggleFullscreen();
+    //inicializando e colocando as musicas
     InitAudioDevice();
+    Music MusicaMenu= LoadMusicStream("musicaMenu.mp3"); 
+    Music MusicaFundo= LoadMusicStream("musicaCircuito.mp3"); 
+    Music MusicaNitro = LoadMusicStream("audionitro.mp3");
+    Music MusicaBatida = LoadMusicStream("audiobatida.mp3");
+    Music MusicaMoeda = LoadMusicStream("audiomoeda.mp3");
+    Music MusicaVencedor1 = LoadMusicStream("vencedor1.mp3");
+    Music MusicaVencedor2 = LoadMusicStream("vencedor2.mp3");
+    PlayMusicStream(MusicaMenu);
+    
     SetTargetFPS(60);
-
+    //parte  fundamental pra pausar a musica do menu
+    bool pause = false;
+    
     aux=1;
-
+    
+    //parte da musica menu
+    UpdateMusicStream(MusicaMenu); 
+    SetMasterVolume(0.7);
+    
+    
     timer timercarro1 = {0, 0};
     timer timercarro2 = {0, 0};
     spritesheetcarro carro1_sheet = {0, 0.0f, 4}; //nitro comeca desligado e o carro1 nasce apontando para esquerda
@@ -65,9 +82,14 @@ int main(){
     ColisaoLimitesPista(barreiras, mapa_pista);
     LocalizaJumper(jumpers, mapa_pista);
     LocalizaNitros(nitros, mapa_pista);
-
+    
     //loop principal do jogo
     while (!WindowShouldClose()){
+        
+        //pausa musica menu e toca a do circuito
+        PauseMusicStream(MusicaMenu);
+        UpdateMusicStream(MusicaFundo); 
+        SetMasterVolume(0.7);
         
         veiculo carro1;
         veiculo carro2;
@@ -90,26 +112,36 @@ int main(){
             Carro1moeda += pegouMoeda(carro1, nitros, numero_nitros);
             Carro2moeda += pegouMoeda(carro2, nitros, numero_nitros);
 
-            if(Carro1moeda != 0) carro1_sheet.moeda = Carro1moeda;
-            if(Carro2moeda != 0) carro2_sheet.moeda = Carro1moeda;
+            if(Carro1moeda != 0){ 
+                carro1_sheet.moeda = Carro1moeda;                 
+                UpdateMusicStream(MusicaMoeda);
+                SetMasterVolume(1.0); }
+            if(Carro2moeda != 0){
+                carro2_sheet.moeda = Carro1moeda;
+                UpdateMusicStream(MusicaMoeda);
+                SetMasterVolume(1.0); }
             
             //verificando se pegaram nitro:
             Carro1nitro = pegouNitro(carro1, jumpers, numero_jumpers);
             Carro2nitro = pegouNitro(carro2, jumpers, numero_jumpers);
 
-            if(Carro1nitro == 1) carro1_sheet.nitro = 1;
-            if(Carro2nitro == 1) carro2_sheet.nitro = 1;
+            if(Carro1nitro == 1)carro1_sheet.nitro = 1;
+            if(Carro2nitro == 1)carro2_sheet.nitro = 1;
 
             //caso peguem o nitro, timer comeca e velocidade aumenta
-            if(carro1_sheet.nitro == 1 && timercarro1.ligado == 0){
+            if(carro1_sheet.nitro == 1 && timercarro1.ligado == 0){ 
                 startTimer(&timercarro1, tempo_nitro_ligado);
                 carro1.velocidade = velocidade_com_nitro;
                 timercarro1.ligado = 1;
+                UpdateMusicStream(MusicaNitro);
+                SetMasterVolume(1.0); 
             }    
             if(carro2_sheet.nitro == 1 && timercarro2.ligado == 0){
                 startTimer(&timercarro2, tempo_nitro_ligado);
                 carro2.velocidade = velocidade_com_nitro;
                 timercarro2.ligado = 1;
+                UpdateMusicStream(MusicaNitro);
+                SetMasterVolume(1.0); 
             }
             
             updateTimer(&timercarro1);
@@ -129,21 +161,37 @@ int main(){
             if(CheckCollisionRecs(carro1.hitboxveiculo, linhaDeChegada)) {
                 final = 1;
                 aux = 7;
+                //audiobatida
+                UpdateMusicStream(MusicaBatida);
+                SetMasterVolume(1.0);
+                //
                 inicializaCarro(&carro1, 1);
                 inicializaCarro(&carro2, 2);
             }
             else if(CheckCollisionRecs(carro2.hitboxveiculo, linhaDeChegada)) {
                 final = 2;
                 aux = 7;
+                //audiobatida
+                UpdateMusicStream(MusicaBatida);
+                SetMasterVolume(1.0);
+                //
                 inicializaCarro(&carro1, 1);
                 inicializaCarro(&carro2, 2);
             }
         }
         if(aux==7 && final==1) {
             mostrarTelaFinal1(imagemVencedor1);
+            //audiovencedor1
+            PauseMusicStream(MusicaFundo);
+            UpdateMusicStream(MusicaVencedor1);
+            SetMasterVolume(1.0);
         }
         if(aux==7 && final==2) {
             mostrarTelaFinal2(imagemVencedor2);
+            //audiovencedor2
+            PauseMusicStream(MusicaFundo);
+            UpdateMusicStream(MusicaVencedor2);
+            SetMasterVolume(1.0);
         }
             BeginDrawing();
             ClearBackground(RAYWHITE);
@@ -179,7 +227,16 @@ int main(){
     UnloadTexture(text_carro1_cima);
     UnloadTexture(text_carro2_cima);
     UnloadTexture(nitro);
-
+    
+    //
+    UnloadMusicStream(MusicaMenu); 
+    UnloadMusicStream(MusicaFundo); 
+    UnloadMusicStream(MusicaNitro);
+    UnloadMusicStream(MusicaBatida); 
+    UnloadMusicStream(MusicaMoeda); 
+    UnloadMusicStream(MusicaVencedor1); 
+    UnloadMusicStream(MusicaVencedor2); 
+    //
     CloseAudioDevice();
 
     CloseWindow();
