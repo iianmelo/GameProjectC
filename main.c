@@ -11,7 +11,7 @@
 float tempo_nitro_ligado = 2.0; 
 float velocidade_com_nitro = 5;
 float velocidade_sem_nitro = 2;
-int numero_nitros = 5; //moedas
+int numero_nitros = 6; //moedas
 int numero_jumpers = 3;
 int acaoCarro1 = 0, Carro1nitro, Carro1moeda = 0;
 int acaoCarro2 = 0, Carro2nitro, Carro2moeda = 0;
