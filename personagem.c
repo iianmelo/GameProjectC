@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "mapa.h"
 
-int numero_bordas = 18;
+int numero_bordas = 19;
 
 void inicializaCarro(veiculo* carro){
     
