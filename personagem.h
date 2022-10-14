@@ -9,14 +9,14 @@
 
 void inicializaCarro(veiculo* carro, int n_carro);
 
-int colidiu(veiculo carro, Rectangle* mapa, int numero_bordas);
+int colidiu(veiculo carro, Rectangle* mapa, int numero_bordas, int direcao);
 
 int movimentarCarro1(veiculo* carro1, Rectangle* barreiras);
 
 int movimentarCarro2(veiculo* carro2, Rectangle* barreiras);
 
-int pegouNitro(veiculo carro, Rectangle* jumpers, int numero_nitros);
+int pegouNitro(veiculo carro, Rectangle* jumpers, int numero_nitros, int direcao);
 
-int pegouMoeda(veiculo carro, Rectangle* nitros, int numero_moedas);
+int pegouMoeda(veiculo carro, Rectangle* nitros, int numero_moedas, int direcao);
 
 #endif
