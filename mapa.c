@@ -70,10 +70,10 @@ void ColisaoLimitesPista(Rectangle mapa[], Texture2D mapa_imagem){
 
     //obstaculos (pedras e barrils)
 
-    mapa[11].x = 593;
-    mapa[11].y = 469;
-    mapa[11].width = 57;
-    mapa[11].height = 60;
+    mapa[11].x = 551;
+    mapa[11].y = 297;
+    mapa[11].width = 65;
+    mapa[11].height = 62;
 
     mapa[12].x = 314;
     mapa[12].y = 68;
@@ -104,7 +104,13 @@ void ColisaoLimitesPista(Rectangle mapa[], Texture2D mapa_imagem){
     mapa[17].y = 86;
     mapa[17].width = 83;
     mapa[17].height = 49;
-
+    
+    //barreira que impede o carrinho a ir para sentido contrario
+    mapa[18].x = 1607;
+    mapa[18].y = 198;
+    mapa[18].width = 138;
+    mapa[18].height = 57;
+    
 }
     //nitros (moedas)
 void LocalizaNitros(Rectangle nitros[], Texture2D mapa){
