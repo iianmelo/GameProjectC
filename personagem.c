@@ -57,9 +57,9 @@ int pegouNitro(veiculo carro, Rectangle* jumpers, int numero_nitros){
 int pegouMoeda(veiculo carro, Rectangle* nitros, int numero_moedas){ 
 
     int pegou = 0;
-    
+
     for(int i=0 ; i<numero_moedas ; i++){
-        if(CheckCOllisionRecs(carro.hitboxveiculo, nitros[i])){
+        if(CheckCollisionRecs(carro.hitboxveiculo, nitros[i])){
             pegou = 1;
         }
     }
