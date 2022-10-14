@@ -33,3 +33,4 @@ void mostrarTelaFinal2 (){
     aux = 1;
     }
 }
+
