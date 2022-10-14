@@ -6,15 +6,14 @@
 #include "raylib.h"
 #include "menu.h"
 #include "mapa.h"
-#include "fimDoJogo.h"
 
-float tempo_nitro_ligado = 10.0; 
+float tempo_nitro_ligado = 2.0; 
 float velocidade_com_nitro = 5;
 float velocidade_sem_nitro = 2;
-//int numero_bordas = 100; //numero da quantidade de retangulos do mapa
-int numero_nitros = 5; //numero da quantidade de retangulos que sao boosts de nitro
-int acaoCarro1;
-int acaoCarro2;
+int numero_nitros = 5; //moedas
+int numero_jumpers = 3;
+int acaoCarro1 = 0, Carro1nitro, Carro1moeda = 0;
+int acaoCarro2 = 0, Carro2nitro, Carro2moeda = 0;
 
 int main(){
 
@@ -26,84 +25,88 @@ int main(){
     int ScreenHei = GetScreenHeight();
     aux=1;
 
-    timer timercarro1 = {0};
-    timer timercarro2 = {0};
-    spritesheetcarro carro1_sheet = {0, 0.0f, 1}; //nitro comeca desligado e o carro1 nasce apontando para cima
-    spritesheetcarro carro2_sheet = {0, 0.0f, 1}; //nitro comeca desligado e o carro2 nasce apontando para cima
-    Rectangle mapa = {0, 0, ScreenWid, ScreenHei};
+    timer timercarro1 = {0, 0};
+    timer timercarro2 = {0, 0};
+    spritesheetcarro carro1_sheet = {0, 0.0f, 4}; //nitro comeca desligado e o carro1 nasce apontando para esquerda
+    spritesheetcarro carro2_sheet = {0, 0.0f, 4}; //nitro comeca desligado e o carro2 nasce apontando para esquerda
+
+    //retangulos do mapa:
+    Rectangle barreiras[18];
+    Rectangle nitros[numero_nitros];
+    Rectangle jumpers[numero_jumpers];
 
     //Imagens e Texturas carro 1 (vermelho):
-    Image carro1_cima = LoadImage("Car_1_01_cima.png");
+    Image carro1_cima = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_01_cima.png");
     ImageResize (&carro1_cima, 50, 100);
-    Image carro1_direita = LoadImage("Car_1_01_direita.png"); 
-    ImageResize(&carro1_direita, 100, 50);
-    Image carro1_esquerda = LoadImage("Car_1_01_esquerda.png");
-    ImageResize(&carro1_esquerda, 100, 50);
-    Image carro1_baixo = LoadImage("Car_1_01_baixo.png");
-    ImageResize(&carro1_baixo, 50, 100);
-
     Texture2D text_carro1_cima = LoadTextureFromImage(carro1_cima);
-    Texture2D text_carro1_direita = LoadTextureFromImage(carro1_direita);
-    Texture2D text_carro1_esquerda = LoadTextureFromImage(carro1_esquerda);
-    Texture2D text_carro1_baixo = LoadTextureFromImage(carro1_baixo);
-    Texture2D textura1_atual;
     
     //Imagens e Texturas carro 2 (amarelo):
-    Image carro2_cima = LoadImage("Car_3_01_cima.png");
+    Image carro2_cima = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_3_Main_Positions/Car_3_01_cima.png");
     ImageResize (&carro2_cima, 50, 100);
-    Image carro2_direita = LoadImage("Car_3_01_direita.png"); 
-    ImageResize(&carro2_direita, 100, 50);
-    Image carro2_esquerda = LoadImage("Car_3_01_esquerda.png");
-    ImageResize(&carro2_esquerda, 100, 50);
-    Image carro2_baixo = LoadImage("Car_3_01_baixo.png");
-    ImageResize(&carro2_baixo, 50, 100);
-
     Texture2D text_carro2_cima = LoadTextureFromImage(carro2_cima);
-    Texture2D text_carro2_direita = LoadTextureFromImage(carro2_direita);
-    Texture2D text_carro2_esquerda = LoadTextureFromImage(carro2_esquerda);
-    Texture2D text_carro2_baixo = LoadTextureFromImage(carro2_baixo);
-    Texture2D textura2_atual;
 
     //Imagens e Texturas nitro:
-    Image nitro_imagem = LoadImage("Nitro_006.png");
+    Image nitro_imagem = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_Effects/Nitro/Nitro_006.png");
     ImageResize(&nitro_imagem, 12, 30);
     Texture2D nitro = LoadTextureFromImage(nitro_imagem);
 
-    Image mapa_corrida = LoadImage("mapa.png");
+    //Imagens e textura mapa:
+    Image mapa_corrida = LoadImage("C:/Users/Ianme/Downloads/mapa.png");
     Texture2D mapa_pista = LoadTextureFromImage(mapa_corrida);
 
-    Texture2D imagemMenu = LoadTexture("menu_inicial.png");
-    Texture2D imagemComoJogar = LoadTexture("como_jogar.png");
-    Texture2D imagemIniciando = LoadTexture("iniciandonovo.png");
+    //Texturas menu inicial:
+    Texture2D imagemMenu = LoadTexture("C:/Users/Ianme/Downloads/menu_inicial.png");
+    Texture2D imagemComoJogar = LoadTexture("C:/Users/Ianme/Downloads/como_jogar.png");
+    Texture2D imagemIniciando = LoadTexture("C:/Users/Ianme/Downloads/iniciandonovo.png");
+
+    ColisaoLimitesPista(barreiras, mapa_pista);
+    LocalizaJumper(jumpers, mapa_pista);
+    LocalizaNitros(nitros, mapa_pista);
 
     //loop principal do jogo
     while (!WindowShouldClose()){
         
         veiculo carro1;
         veiculo carro2;
-        inicializaCarro(&carro1);
-        inicializaCarro(&carro2);
+        inicializaCarro(&carro1, 1);
+        inicializaCarro(&carro2, 2);
 
         while(IsKeyUp(KEY_ESCAPE)){ //possibilidade de criar um menu de pausa
 
+        if(aux==4){
             //movimentando os carros:
-            acaoCarro1 = movimentarCarro1(&carro1, mapa);
-            acaoCarro2 = movimentarCarro2(&carro2, mapa);
+            acaoCarro1 = movimentarCarro1(&carro1, barreiras);
+            acaoCarro2 = movimentarCarro2(&carro2, barreiras);
+
+            if(acaoCarro1 != 0)
             carro1_sheet.direcao = acaoCarro1;
+            if(acaoCarro2 != 0)
             carro2_sheet.direcao = acaoCarro2;
             
+            //verificando se pegaram moeda:
+            Carro1moeda += pegouMoeda(carro1, nitros, numero_nitros);
+            Carro2moeda += pegouMoeda(carro2, nitros, numero_nitros);
+
+            if(Carro1moeda != 0) carro1_sheet.moeda = Carro1moeda;
+            if(Carro2moeda != 0) carro2_sheet.moeda = Carro1moeda;
+            
             //verificando se pegaram nitro:
-            carro1_sheet.nitro = pegouNitro(&carro1_sheet, &carro1, mapa, numero_bordas, numero_nitros);
-            carro2_sheet.nitro = pegouNitro(&carro2_sheet, &carro2, mapa, numero_bordas, numero_nitros);
+            Carro1nitro = pegouNitro(carro1, jumpers, numero_jumpers);
+            Carro2nitro = pegouNitro(carro2, jumpers, numero_jumpers);
+
+            if(Carro1nitro == 1) carro1_sheet.nitro = 1;
+            if(Carro2nitro == 1) carro2_sheet.nitro = 1;
 
             //caso peguem o nitro, timer comeca e velocidade aumenta
-            if(carro1_sheet.nitro == 1){
+            if(carro1_sheet.nitro == 1 && timercarro1.ligado == 0){
                 startTimer(&timercarro1, tempo_nitro_ligado);
                 carro1.velocidade = velocidade_com_nitro;
+                timercarro1.ligado = 1;
             }    
-            if(carro2_sheet.nitro == 1){
+            if(carro2_sheet.nitro == 1 && timercarro2.ligado == 0){
                 startTimer(&timercarro2, tempo_nitro_ligado);
                 carro2.velocidade = velocidade_com_nitro;
+                timercarro2.ligado = 1;
             }
             
             updateTimer(&timercarro1);
@@ -113,69 +116,14 @@ int main(){
             if(carro1_sheet.nitro == 1 && timerDone(&timercarro1)){
                 carro1.velocidade = velocidade_sem_nitro;
                 carro1_sheet.nitro = 0;
+                timercarro1.ligado = 0;
             }
             if(carro2_sheet.nitro == 1 && timerDone(&timercarro2)){
                 carro2.velocidade = velocidade_sem_nitro;
                 carro2_sheet.nitro = 0;
+                timercarro2.ligado = 0;
             }
-    
-            
-            switch(acaoCarro1){
-
-                case 1:
-                    textura1_atual = LoadTextureFromImage(carro1_cima);
-                    break;
-                case 2: 
-                    textura1_atual = LoadTextureFromImage(carro1_direita);
-                    break;
-                case 3:
-                    textura1_atual = LoadTextureFromImage(carro1_baixo);
-                    break;
-                case 4:
-                    textura1_atual = LoadTextureFromImage(carro1_esquerda);
-                    break;
-                case 5:
-                    textura1_atual = LoadTextureFromImage(carro1_cima);
-                    break;
-                case 6:
-                    textura1_atual = LoadTextureFromImage(carro1_baixo);
-                    break;
-                case 7:
-                    textura1_atual = LoadTextureFromImage(carro1_baixo);
-                    break;
-                case 8:
-                    textura1_atual = LoadTextureFromImage(carro1_cima);
-                    break;
-            }
-
-            switch(acaoCarro2){
-                
-                case 1:
-                    textura2_atual = LoadTextureFromImage(carro2_cima);
-                    break;
-                case 2: 
-                    textura2_atual = LoadTextureFromImage(carro2_direita);
-                    break;
-                case 3:
-                    textura2_atual = LoadTextureFromImage(carro2_baixo);
-                    break;
-                case 4:
-                    textura2_atual = LoadTextureFromImage(carro2_esquerda);
-                    break; 
-                case 5:
-                    textura2_atual = LoadTextureFromImage(carro2_cima);
-                    break;
-                case 6:
-                    textura2_atual = LoadTextureFromImage(carro2_baixo);
-                    break;
-                case 7:
-                    textura2_atual = LoadTextureFromImage(carro2_baixo);
-                    break;
-                case 8:
-                    textura2_atual = LoadTextureFromImage(carro2_cima);
-                    break;
-            }
-
+        }
             BeginDrawing();
             ClearBackground(RAYWHITE);
             if(aux==1) {
@@ -190,48 +138,30 @@ int main(){
             else if(aux==4){ 
             //animando os carros:
                 DrawTexture(mapa_pista, 0, 0, RAYWHITE);
-                animarCarro(&carro1_sheet, textura1_atual, nitro, carro1);
-                animarCarro(&carro2_sheet, textura2_atual, nitro, carro2);
-            }
-            if((*carro1).posicaoveiculo.y == 390){
-                mostrarTelaFinal1(imagemVencedor1);
-            }
-            else if((*carro2).posicao.y == 390){
-                mostrarTelaFinal2(imagemVencedor2);
+                animarCarro(&carro1_sheet, text_carro1_cima, nitro, &carro1);
+                animarCarro(&carro2_sheet, text_carro2_cima, nitro, &carro2);
             }
             EndDrawing();
         }
     }
-    if(aux==7){
-        UnloadImage(mapa_corrida);
-        UnloadImage(carro1_cima);
-        UnloadImage(carro1_direita);
-        UnloadImage(carro1_esquerda);
-        UnloadImage(carro1_baixo);
-        UnloadImage(carro2_cima);
-        UnloadImage(carro2_direita);
-        UnloadImage(carro2_esquerda);
-        UnloadImage(carro2_baixo);
-        UnloadImage(nitro_imagem);
 
-        UnloadTexture(imagemMenu);
-        UnloadTexture(imagemIniciando);
-        UnloadTexture(imagemComoJogar);
-        UnloadTexture(text_carro1_cima);
-        UnloadTexture(text_carro1_direita);
-        UnloadTexture(text_carro1_esquerda);
-        UnloadTexture(text_carro1_baixo);
-        UnloadTexture(text_carro2_cima);
-        UnloadTexture(text_carro2_direita);
-        UnloadTexture(text_carro2_esquerda);
-        UnloadTexture(text_carro2_baixo);
-        UnloadTexture(textura1_atual);
-        UnloadTexture(textura2_atual);
-        UnloadTexture(nitro);
+    UnloadImage(mapa_corrida);
+    UnloadImage(carro1_cima);
+    UnloadImage(carro2_cima);
+    UnloadImage(nitro_imagem);
 
-        CloseAudioDevice();
+    UnloadTexture(imagemMenu);
+    UnloadTexture(imagemIniciando);
+    UnloadTexture(imagemComoJogar);
+    UnloadTexture(text_carro1_cima);
+    UnloadTexture(text_carro2_cima);
+    UnloadTexture(nitro);
 
-        CloseWindow();
-    }
+    CloseAudioDevice();
+
+    CloseWindow();
     return 0;
-}
+
+
+    
+} 
