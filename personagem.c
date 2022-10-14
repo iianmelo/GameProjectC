@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <math.h>
 
-int numero_bordas = 18;
+int numero_bordas = 19;
 
 void inicializaCarro(veiculo* carro, int n_carro){
     
