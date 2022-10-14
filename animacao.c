@@ -5,12 +5,14 @@
 
 typedef struct{
     float tempo_duracao;
+    int ligado;
 } timer;
 
 typedef struct{
     int nitro; //se o nitro estiver ligado, fazer a animacao do nitro
     float angulo; 
     int direcao; //esse parametro dependera do valor que a funcao de movimentar o carro retornar
+    int moeda;
 } spritesheetcarro;
 
 typedef struct{
@@ -53,7 +55,7 @@ void animarCarro(spritesheetcarro* carro_sheet, Texture2D textura_carro, Texture
     Rectangle destination_nitro2 = {carro->posicaoveiculo.x, carro->posicaoveiculo.y, 12, 30};
 
     //desenhando a hitbox:
-    //DrawRectangleRec(carro->hitboxveiculo, BLACK);
+    DrawRectangleRec(carro->hitboxveiculo, BLACK);
 
     if(carro_sheet->direcao == 1){
         DrawTexturePro(textura_carro, source, destination, centro_carro, 0.0f, RAYWHITE);
@@ -126,5 +128,6 @@ void animarCarro(spritesheetcarro* carro_sheet, Texture2D textura_carro, Texture
             DrawTexturePro(textura_nitro, source2, destination_nitro2, centro_nitro2, 135.0f, RAYWHITE);
         }
     }
-    DrawCircle(carro->posicaoveiculo.x, carro->posicaoveiculo.y, 6, GREEN);
+    //DrawCircle(carro->posicaoveiculo.x, carro->posicaoveiculo.y, 6, GREEN);
+    //DrawRectangleRec(carro->hitboxveiculo, BLACK);
 }
