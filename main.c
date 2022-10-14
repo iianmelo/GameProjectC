@@ -1,167 +1,162 @@
-#include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
-#include "personagem.h"
-#include "animacao.h"
-#include "raylib.h"
-#include "menu.h"
 #include "mapa.h"
+#include "raylib.h"
+#include "personagem.h"
 
-float tempo_nitro_ligado = 2.0; 
-float velocidade_com_nitro = 5;
-float velocidade_sem_nitro = 2;
-int numero_nitros = 5; //moedas
-int numero_jumpers = 3;
-int acaoCarro1 = 0, Carro1nitro, Carro1moeda = 0;
-int acaoCarro2 = 0, Carro2nitro, Carro2moeda = 0;
-
-int main(){
-
-    InitWindow(GetScreenWidth(), GetScreenHeight(), "IP Racers");
-    ToggleFullscreen();
-    InitAudioDevice();
-    SetTargetFPS(60);
-    int ScreenWid = GetScreenWidth();
-    int ScreenHei = GetScreenHeight();
-    aux=1;
-
-    timer timercarro1 = {0, 0};
-    timer timercarro2 = {0, 0};
-    spritesheetcarro carro1_sheet = {0, 0.0f, 4}; //nitro comeca desligado e o carro1 nasce apontando para esquerda
-    spritesheetcarro carro2_sheet = {0, 0.0f, 4}; //nitro comeca desligado e o carro2 nasce apontando para esquerda
-
-    //retangulos do mapa:
-    Rectangle barreiras[18];
-    Rectangle nitros[numero_nitros];
-    Rectangle jumpers[numero_jumpers];
-
-    //Imagens e Texturas carro 1 (vermelho):
-    Image carro1_cima = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_1_Main_Positions/Car_1_01_cima.png");
-    ImageResize (&carro1_cima, 50, 100);
-    Texture2D text_carro1_cima = LoadTextureFromImage(carro1_cima);
-    
-    //Imagens e Texturas carro 2 (amarelo):
-    Image carro2_cima = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_3_Main_Positions/Car_3_01_cima.png");
-    ImageResize (&carro2_cima, 50, 100);
-    Texture2D text_carro2_cima = LoadTextureFromImage(carro2_cima);
-
-    //Imagens e Texturas nitro:
-    Image nitro_imagem = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_Effects/Nitro/Nitro_006.png");
-    ImageResize(&nitro_imagem, 12, 30);
-    Texture2D nitro = LoadTextureFromImage(nitro_imagem);
-
-    //Imagens e textura mapa:
-    Image mapa_corrida = LoadImage("C:/Users/Ianme/Downloads/mapa.png");
-    Texture2D mapa_pista = LoadTextureFromImage(mapa_corrida);
-
-    //Texturas menu inicial:
-    Texture2D imagemMenu = LoadTexture("C:/Users/Ianme/Downloads/menu_inicial.png");
-    Texture2D imagemComoJogar = LoadTexture("C:/Users/Ianme/Downloads/como_jogar.png");
-    Texture2D imagemIniciando = LoadTexture("C:/Users/Ianme/Downloads/iniciandonovo.png");
-
-    ColisaoLimitesPista(barreiras, mapa_pista);
-    LocalizaJumper(jumpers, mapa_pista);
-    LocalizaNitros(nitros, mapa_pista);
-
-    //loop principal do jogo
-    while (!WindowShouldClose()){
-        
-        veiculo carro1;
-        veiculo carro2;
-        inicializaCarro(&carro1, 1);
-        inicializaCarro(&carro2, 2);
-
-        while(IsKeyUp(KEY_ESCAPE)){ //possibilidade de criar um menu de pausa
-
-        if(aux==4){
-            //movimentando os carros:
-            acaoCarro1 = movimentarCarro1(&carro1, barreiras);
-            acaoCarro2 = movimentarCarro2(&carro2, barreiras);
-
-            if(acaoCarro1 != 0)
-            carro1_sheet.direcao = acaoCarro1;
-            if(acaoCarro2 != 0)
-            carro2_sheet.direcao = acaoCarro2;
-            
-            //verificando se pegaram moeda:
-            Carro1moeda += pegouMoeda(carro1, nitros, numero_nitros);
-            Carro2moeda += pegouMoeda(carro2, nitros, numero_nitros);
-
-            if(Carro1moeda != 0) carro1_sheet.moeda = Carro1moeda;
-            if(Carro2moeda != 0) carro2_sheet.moeda = Carro1moeda;
-            
-            //verificando se pegaram nitro:
-            Carro1nitro = pegouNitro(carro1, jumpers, numero_jumpers);
-            Carro2nitro = pegouNitro(carro2, jumpers, numero_jumpers);
-
-            if(Carro1nitro == 1) carro1_sheet.nitro = 1;
-            if(Carro2nitro == 1) carro2_sheet.nitro = 1;
-
-            //caso peguem o nitro, timer comeca e velocidade aumenta
-            if(carro1_sheet.nitro == 1 && timercarro1.ligado == 0){
-                startTimer(&timercarro1, tempo_nitro_ligado);
-                carro1.velocidade = velocidade_com_nitro;
-                timercarro1.ligado = 1;
-            }    
-            if(carro2_sheet.nitro == 1 && timercarro2.ligado == 0){
-                startTimer(&timercarro2, tempo_nitro_ligado);
-                carro2.velocidade = velocidade_com_nitro;
-                timercarro2.ligado = 1;
-            }
-            
-            updateTimer(&timercarro1);
-            updateTimer(&timercarro2);
-            
-            //se o nitro acabar velocidade diminui
-            if(carro1_sheet.nitro == 1 && timerDone(&timercarro1)){
-                carro1.velocidade = velocidade_sem_nitro;
-                carro1_sheet.nitro = 0;
-                timercarro1.ligado = 0;
-            }
-            if(carro2_sheet.nitro == 1 && timerDone(&timercarro2)){
-                carro2.velocidade = velocidade_sem_nitro;
-                carro2_sheet.nitro = 0;
-                timercarro2.ligado = 0;
-            }
-        }
-            BeginDrawing();
-            ClearBackground(RAYWHITE);
-            if(aux==1) {
-                iniciarMenu(imagemMenu);
-            }
-            else if(aux==2){
-                iniciandoJogo(imagemIniciando);
-            }
-            else if(aux==3){
-                abrirExplicacao(imagemComoJogar);
-            }
-            else if(aux==4){ 
-            //animando os carros:
-                DrawTexture(mapa_pista, 0, 0, RAYWHITE);
-                animarCarro(&carro1_sheet, text_carro1_cima, nitro, &carro1);
-                animarCarro(&carro2_sheet, text_carro2_cima, nitro, &carro2);
-            }
-            EndDrawing();
-        }
-    }
-
-    UnloadImage(mapa_corrida);
-    UnloadImage(carro1_cima);
-    UnloadImage(carro2_cima);
-    UnloadImage(nitro_imagem);
-
-    UnloadTexture(imagemMenu);
-    UnloadTexture(imagemIniciando);
-    UnloadTexture(imagemComoJogar);
-    UnloadTexture(text_carro1_cima);
-    UnloadTexture(text_carro2_cima);
-    UnloadTexture(nitro);
-
-    CloseAudioDevice();
-
-    CloseWindow();
-    return 0;
+Texture2D abrirmapa(){
+    Image mapaPng = LoadImage("assets/images/mapa.png");
+    Texture2D mapa_imagem = LoadTextureFromImage(mapaPng);
+    UnloadImage(mapaPng);
+    return mapa_imagem;
+}
 
 
-    
-} 
+void ColisaoLimitesPista(Rectangle barreiras[], Texture2D mapa_imagem){
+
+    //Retangulos do limite da pista
+
+    barreiras[0].x = 0;
+    barreiras[0].y = 0;
+    barreiras[0].width = 1920 ;
+    barreiras[0].height = 60;
+
+    barreiras[1].x = 0;
+    barreiras[1].y = 60 ;
+    barreiras[1].width = 51;
+    barreiras[1].height = 1033;
+
+    barreiras[2].x = 231;
+    barreiras[2].y = 231;
+    barreiras[2].width = 303;
+    barreiras[2].height = 660;
+
+    barreiras[3].x = 539;
+    barreiras[3].y = 587;
+    barreiras[3].width = 569;
+    barreiras[3].height = 309;
+
+    barreiras[4].x = 701 ;
+    barreiras[4].y = 61;
+    barreiras[4].width = 199;
+    barreiras[4].height = 369;
+
+    barreiras[5].x = 1075;
+    barreiras[5].y = 243;
+    barreiras[5].width = 517;
+    barreiras[5].height = 175;
+
+    barreiras[6].x = 1763;
+    barreiras[6].y = 61;
+    barreiras[6].width = 153;
+    barreiras[6].height = 1021;
+
+    barreiras[7].x = 1293;
+    barreiras[7].y = 597;
+    barreiras[7].width = 465;
+    barreiras[7].height = 481;
+
+    barreiras[8].x = 1073;
+    barreiras[8].y = 415;
+    barreiras[8].width = 45;
+    barreiras[8].height = 169;
+
+    barreiras[9].x = 55;
+    barreiras[9].y = 1061;
+    barreiras[9].width = 1229;
+    barreiras[9].height = 17;
+
+    barreiras[10].x = 1073;
+    barreiras[10].y = 435;
+    barreiras[10].width = 45;
+    barreiras[10].height = 169;
+
+    //obstaculos (pedras e barrils)
+
+    barreiras[11].x = 593;
+    barreiras[11].y = 469;
+    barreiras[11].width = 57;
+    barreiras[11].height = 60;
+
+    barreiras[12].x = 314;
+    barreiras[12].y = 68;
+    barreiras[12].width = 131;
+    barreiras[12].height = 50;
+
+    barreiras[13].x = 70;
+    barreiras[13].y = 516;
+    barreiras[13].width = 65;
+    barreiras[13].height = 43;
+
+    barreiras[14].x = 385;
+    barreiras[14].y = 908;
+    barreiras[14].width = 124;
+    barreiras[14].height = 51;
+
+    barreiras[15].x = 999;
+    barreiras[15].y = 905;
+    barreiras[15].width = 66;
+    barreiras[15].height = 64;
+
+    barreiras[16].x = 1213;
+    barreiras[16].y = 689;
+    barreiras[16].width = 62;
+    barreiras[16].height = 46;
+
+    barreiras[17].x = 1113;
+    barreiras[17].y = 86;
+    barreiras[17].width = 83;
+    barreiras   [17].height = 49;
+
+}
+    //nitros (moedas)
+void LocalizaNitros(Rectangle nitros[], Texture2D mapa){
+
+    nitros[0].x = 1002;
+    nitros[0].y = 104;
+    nitros[0].width = 43;
+    nitros[0].height = 47;
+
+    nitros[1].x = 944;
+    nitros[1].y = 503;
+    nitros[1].width = 47;
+    nitros[1].height = 42;
+
+    nitros[2].x = 68;
+    nitros[2].y = 326;
+    nitros[2].width = 51;
+    nitros[2].height = 46;
+
+    nitros[3].x = 150;
+    nitros[3].y = 803;
+    nitros[3].width = 43;
+    nitros[3].height = 47;
+
+    nitros[4].x = 767;
+    nitros[4].y = 991;
+    nitros[4].width = 44;
+    nitros[4].height = 44;
+}
+
+    //jumper que aumenta a velocidade
+void LocalizaJumper(Rectangle jumper[], Texture2D mapa){
+
+    jumper[0].x = 767;
+    jumper[0].y = 436;
+    jumper[0].width = 92;
+    jumper[0].height = 60;
+
+    jumper[1].x = 571;
+    jumper[1].y = 908;
+    jumper[1].width = 89;
+    jumper[1].height = 57;
+
+    jumper[2].x = 339;
+    jumper[2].y = 154;
+    jumper[2].width = 94;
+    jumper[2].height = 58;
+}
+ 
+    //linha de partida
+    Rectangle linhaDePartida = {1471, 75, 43, 151};
+
+    //linha de chegada
+    Rectangle linhaDeChegada = {1604, 291, 152, 49};
