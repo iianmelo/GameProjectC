@@ -4,7 +4,7 @@ Music MusicaMenu= LoadMusicStream("musicaMenu.mp3");
 Music MusicaFundo= LoadMusicStream("musicaCircuito.mp3"); 
 Music MusicaNitro = LoadMusicStream("audionitro.mp3");
 Music MusicaBatida = LoadMusicStream("audiobatida.mp3");
-Music MusicaMoeda = LoadMusicStream("");
+Music MusicaMoeda = LoadMusicStream("audiomoeda.mp3");
 Music MusicaVencedor1 = LoadMusicStream("vencedor1.mp3");
 Music MusicaVencedor2 = LoadMusicStream("vencedor2.mp3");
 
