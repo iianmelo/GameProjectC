@@ -2,7 +2,7 @@
 #include "personagem.h"
 
 Texture2D abrirmapa(){
-    Image mapaPng = LoadImage("assets/images/mapa.png");
+    Image mapaPng = LoadImage("assets/images/mapa_novo.png");
     Texture2D mapa_imagem = LoadTextureFromImage(mapaPng);
     UnloadImage(mapaPng);
     return mapa_imagem;
