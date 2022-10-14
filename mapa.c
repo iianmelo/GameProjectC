@@ -78,7 +78,7 @@ void ColisaoLimitesPista(Rectangle mapa[], Texture2D mapa_imagem){
     mapa[12].x = 314;
     mapa[12].y = 68;
     mapa[12].width = 131;
-    mapa[12].height = 157;
+    mapa[12].height = 51;
 
     mapa[13].x = 70;
     mapa[13].y = 516;
