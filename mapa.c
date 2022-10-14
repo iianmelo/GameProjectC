@@ -71,10 +71,10 @@ void ColisaoLimitesPista(Rectangle barreiras[], Texture2D mapa_imagem){
 
     //obstaculos (pedras e barrils)
 
-    barreiras[11].x = 593;
-    barreiras[11].y = 469;
-    barreiras[11].width = 57;
-    barreiras[11].height = 60;
+    barreiras[11].x = 551;
+    barreiras[11].y = 297;
+    barreiras[11].width = 65;
+    barreiras[11].height = 62;
 
     barreiras[12].x = 314;
     barreiras[12].y = 68;
@@ -104,7 +104,13 @@ void ColisaoLimitesPista(Rectangle barreiras[], Texture2D mapa_imagem){
     barreiras[17].x = 1113;
     barreiras[17].y = 86;
     barreiras[17].width = 83;
-    barreiras   [17].height = 49;
+    barreiras[17].height = 49;
+    
+    //barreira que impede o carro de ir pelo sentido contrario
+    barreiras[18].x = 1607;
+    barreiras[18].y = 198;
+    barreiras[18].width = 138;
+    barreiras[18].height = 57;
 
 }
     //nitros (moedas)
