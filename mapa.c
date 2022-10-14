@@ -114,7 +114,7 @@ void ColisaoLimitesPista(Rectangle barreiras[], Texture2D mapa_imagem){
 
 }
     //nitros (moedas)
-void LocalizaNitros(Rectangle nitros[], Texture2D mapa){
+/*void LocalizaNitros(Rectangle nitros[], Texture2D mapa){
 
     nitros[0].x = 1002;
     nitros[0].y = 104;
@@ -140,7 +140,7 @@ void LocalizaNitros(Rectangle nitros[], Texture2D mapa){
     nitros[4].y = 991;
     nitros[4].width = 44;
     nitros[4].height = 44;
-}
+}*/
 
     //jumper que aumenta a velocidade
 void LocalizaJumper(Rectangle jumper[], Texture2D mapa){
@@ -159,6 +159,22 @@ void LocalizaJumper(Rectangle jumper[], Texture2D mapa){
     jumper[2].y = 154;
     jumper[2].width = 94;
     jumper[2].height = 58;
+
+    jumper[3].x = 153;
+    jumper[3].y = 701;
+    jumper[3].width = 59;
+    jumper[3].height = 89;
+
+    jumper[4].x = 1257;
+    jumper[4].y = 81;
+    jumper[4].width = 89;
+    jumper[4].height = 53;
+
+    jumper[5].x = 1375;
+    jumper[5].y = 519;
+    jumper[5].width = 87;
+    jumper[5].height = 59;
+
 }
  
     //linha de partida
