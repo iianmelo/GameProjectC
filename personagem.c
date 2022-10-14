@@ -2,6 +2,7 @@
 #include "personagem.h"
 #include "animacao.h"
 #include <stdbool.h>
+#include <math.h>
 
 int numero_bordas = 18;
 
@@ -28,39 +29,195 @@ void inicializaCarro(veiculo* carro, int n_carro){
 
 }
 
-int colidiu(veiculo carro, Rectangle* barreiras, int numero_bordas){
+int colidiu(veiculo carro, Rectangle* barreiras, int numero_bordas, int direcao){
 
     int colidiu = 0;
-    
+
+    if(direcao == 1 || direcao == 2 || direcao == 3 || direcao == 4){
     for(int i=0 ; i<numero_bordas ; i++){
         if(CheckCollisionRecs(carro.hitboxveiculo, barreiras[i])){
             colidiu = 1;
+        }
+    }
+    }
+
+    else if(direcao == 5 || direcao == 7){
+        float rotacao = 45.0f;
+
+        Vector2 A = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (-50) * cos(rotacao))};
+        Vector2 B = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (-50) * cos(rotacao))};
+        Vector2 C = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (50) * sin(rotacao)), carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 D = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (50) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 AD = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (0) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (0) * cos(rotacao))};
+        Vector2 CD = {carro.posicaoveiculo.x + ((0) * cos(rotacao) - (50) * sin(rotacao)) , carro.posicaoveiculo.y + ((0) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 BC = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (0) * sin(rotacao)) , carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (0) * cos(rotacao))};
+        Vector2 AB = {carro.posicaoveiculo.x + ((0) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((0) * sin(rotacao) + (-50) * cos(rotacao))};
+
+        for(int i=0 ; i<numero_bordas ; i++){
+            if(CheckCollisionPointRec(A, barreiras[i])) colidiu = 1;
+            if(CheckCollisionPointRec(B, barreiras[i])) colidiu = 1;
+            if(CheckCollisionPointRec(C, barreiras[i])) colidiu = 1;
+            if(CheckCollisionPointRec(D, barreiras[i])) colidiu = 1;
+            if(CheckCollisionPointRec(AD, barreiras[i])) colidiu = 1;
+            if(CheckCollisionPointRec(CD, barreiras[i])) colidiu = 1;
+            if(CheckCollisionPointRec(BC, barreiras[i])) colidiu = 1;
+            if(CheckCollisionPointRec(AB, barreiras[i])) colidiu = 1;
+        }
+
+    }
+
+    else  if(direcao == 8 || direcao == 6){
+
+        float rotacao = 135.0f;
+
+        Vector2 A = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (-50) * cos(rotacao))};
+        Vector2 B = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (-50) * cos(rotacao))};
+        Vector2 C = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (50) * sin(rotacao)), carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 D = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (50) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 AD = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (0) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (0) * cos(rotacao))};
+        Vector2 CD = {carro.posicaoveiculo.x + ((0) * cos(rotacao) - (50) * sin(rotacao)) , carro.posicaoveiculo.y + ((0) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 BC = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (0) * sin(rotacao)) , carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (0) * cos(rotacao))};
+        Vector2 AB = {carro.posicaoveiculo.x + ((0) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((0) * sin(rotacao) + (-50) * cos(rotacao))};
+
+        for(int i=0 ; i<numero_bordas ; i++){
+            if(CheckCollisionPointRec(A, barreiras[i])) colidiu = 1;
+            if(CheckCollisionPointRec(B, barreiras[i])) colidiu = 1;
+            if(CheckCollisionPointRec(C, barreiras[i])) colidiu = 1;
+            if(CheckCollisionPointRec(D, barreiras[i])) colidiu = 1;
+            if(CheckCollisionPointRec(AD, barreiras[i])) colidiu = 1;
+            if(CheckCollisionPointRec(CD, barreiras[i])) colidiu = 1;
+            if(CheckCollisionPointRec(BC, barreiras[i])) colidiu = 1;
+            if(CheckCollisionPointRec(AB, barreiras[i])) colidiu = 1;
         }
     }
 
     return colidiu;
 }
 
-int pegouNitro(veiculo carro, Rectangle* jumpers, int numero_nitros){
-    
-    int pegou = 0;
+int pegouNitro(veiculo carro, Rectangle* jumpers, int numero_nitros, int direcao){
+   
+   int pegou = 0;
 
-    for(int i=0; i<numero_nitros; i++){
+    if(direcao == 1 || direcao == 2 || direcao == 3 || direcao == 4){
+    for(int i=0 ; i<numero_nitros ; i++){
         if(CheckCollisionRecs(carro.hitboxveiculo, jumpers[i])){
             pegou = 1;
+        }
+    }
+    }
+
+    else if(direcao == 5 || direcao == 7){
+        float rotacao = 45.0f;
+
+        Vector2 A = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (-50) * cos(rotacao))};
+        Vector2 B = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (-50) * cos(rotacao))};
+        Vector2 C = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (50) * sin(rotacao)), carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 D = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (50) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 AD = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (0) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (0) * cos(rotacao))};
+        Vector2 CD = {carro.posicaoveiculo.x + ((0) * cos(rotacao) - (50) * sin(rotacao)) , carro.posicaoveiculo.y + ((0) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 BC = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (0) * sin(rotacao)) , carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (0) * cos(rotacao))};
+        Vector2 AB = {carro.posicaoveiculo.x + ((0) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((0) * sin(rotacao) + (-50) * cos(rotacao))};
+
+        for(int i=0 ; i<numero_nitros ; i++){
+            if(CheckCollisionPointRec(A, jumpers[i])) pegou = 1;
+            if(CheckCollisionPointRec(B, jumpers[i])) pegou = 1;
+            if(CheckCollisionPointRec(C, jumpers[i])) pegou = 1;
+            if(CheckCollisionPointRec(D, jumpers[i])) pegou = 1;
+            if(CheckCollisionPointRec(AD, jumpers[i])) pegou = 1;
+            if(CheckCollisionPointRec(CD, jumpers[i])) pegou = 1;
+            if(CheckCollisionPointRec(BC, jumpers[i])) pegou = 1;
+            if(CheckCollisionPointRec(AB, jumpers[i])) pegou = 1;
+        }
+
+    }
+
+    else  if(direcao == 8 || direcao == 6){
+
+        float rotacao = 135.0f;
+
+        Vector2 A = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (-50) * cos(rotacao))};
+        Vector2 B = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (-50) * cos(rotacao))};
+        Vector2 C = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (50) * sin(rotacao)), carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 D = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (50) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 AD = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (0) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (0) * cos(rotacao))};
+        Vector2 CD = {carro.posicaoveiculo.x + ((0) * cos(rotacao) - (50) * sin(rotacao)) , carro.posicaoveiculo.y + ((0) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 BC = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (0) * sin(rotacao)) , carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (0) * cos(rotacao))};
+        Vector2 AB = {carro.posicaoveiculo.x + ((0) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((0) * sin(rotacao) + (-50) * cos(rotacao))};
+
+        for(int i=0 ; i<numero_nitros ; i++){
+            if(CheckCollisionPointRec(A, jumpers[i])) pegou = 1;
+            if(CheckCollisionPointRec(B, jumpers[i])) pegou = 1;
+            if(CheckCollisionPointRec(C, jumpers[i])) pegou = 1;
+            if(CheckCollisionPointRec(D, jumpers[i])) pegou = 1;
+            if(CheckCollisionPointRec(AD, jumpers[i])) pegou = 1;
+            if(CheckCollisionPointRec(CD, jumpers[i])) pegou = 1;
+            if(CheckCollisionPointRec(BC, jumpers[i])) pegou = 1;
+            if(CheckCollisionPointRec(AB, jumpers[i])) pegou = 1;
         }
     }
 
     return pegou;
 }
 
-int pegouMoeda(veiculo carro, Rectangle* nitros, int numero_moedas){ 
+int pegouMoeda(veiculo carro, Rectangle* nitros, int numero_moedas, int direcao){ 
 
-    int pegou = 0;
+   int pegou = 0;
 
+    if(direcao == 1 || direcao == 2 || direcao == 3 || direcao == 4){
     for(int i=0 ; i<numero_moedas ; i++){
         if(CheckCollisionRecs(carro.hitboxveiculo, nitros[i])){
             pegou = 1;
+        }
+    }
+    }
+
+    else if(direcao == 5 || direcao == 7){
+        float rotacao = 45.0f;
+
+        Vector2 A = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (-50) * cos(rotacao))};
+        Vector2 B = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (-50) * cos(rotacao))};
+        Vector2 C = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (50) * sin(rotacao)), carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 D = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (50) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 AD = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (0) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (0) * cos(rotacao))};
+        Vector2 CD = {carro.posicaoveiculo.x + ((0) * cos(rotacao) - (50) * sin(rotacao)) , carro.posicaoveiculo.y + ((0) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 BC = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (0) * sin(rotacao)) , carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (0) * cos(rotacao))};
+        Vector2 AB = {carro.posicaoveiculo.x + ((0) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((0) * sin(rotacao) + (-50) * cos(rotacao))};
+
+        for(int i=0 ; i<numero_moedas ; i++){
+            if(CheckCollisionPointRec(A, nitros[i])) pegou = 1;
+            if(CheckCollisionPointRec(B, nitros[i])) pegou = 1;
+            if(CheckCollisionPointRec(C, nitros[i])) pegou = 1;
+            if(CheckCollisionPointRec(D, nitros[i])) pegou = 1;
+            if(CheckCollisionPointRec(AD, nitros[i])) pegou = 1;
+            if(CheckCollisionPointRec(CD, nitros[i])) pegou = 1;
+            if(CheckCollisionPointRec(BC, nitros[i])) pegou = 1;
+            if(CheckCollisionPointRec(AB, nitros[i])) pegou = 1;
+        }
+
+    }
+
+    else  if(direcao == 8 || direcao == 6){
+
+        float rotacao = 135.0f;
+
+        Vector2 A = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (-50) * cos(rotacao))};
+        Vector2 B = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (-50) * cos(rotacao))};
+        Vector2 C = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (50) * sin(rotacao)), carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 D = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (50) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 AD = {carro.posicaoveiculo.x + ((25) * cos(rotacao) - (0) * sin(rotacao)) , carro.posicaoveiculo.y + ((25) * sin(rotacao) + (0) * cos(rotacao))};
+        Vector2 CD = {carro.posicaoveiculo.x + ((0) * cos(rotacao) - (50) * sin(rotacao)) , carro.posicaoveiculo.y + ((0) * sin(rotacao) + (50) * cos(rotacao))};
+        Vector2 BC = {carro.posicaoveiculo.x + ((-25) * cos(rotacao) - (0) * sin(rotacao)) , carro.posicaoveiculo.y + ((-25) * sin(rotacao) + (0) * cos(rotacao))};
+        Vector2 AB = {carro.posicaoveiculo.x + ((0) * cos(rotacao) - (-50) * sin(rotacao)) , carro.posicaoveiculo.y + ((0) * sin(rotacao) + (-50) * cos(rotacao))};
+
+        for(int i=0 ; i<numero_moedas ; i++){
+            if(CheckCollisionPointRec(A, nitros[i])) pegou = 1;
+            if(CheckCollisionPointRec(B, nitros[i])) pegou = 1;
+            if(CheckCollisionPointRec(C, nitros[i])) pegou = 1;
+            if(CheckCollisionPointRec(D, nitros[i])) pegou = 1;
+            if(CheckCollisionPointRec(AD, nitros[i])) pegou = 1;
+            if(CheckCollisionPointRec(CD, nitros[i])) pegou = 1;
+            if(CheckCollisionPointRec(BC, nitros[i])) pegou = 1;
+            if(CheckCollisionPointRec(AB, nitros[i])) pegou = 1;
         }
     }
 
@@ -78,7 +235,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle* barreiras){
             (*carro1).hitboxveiculo.x -= (int)((*carro1).velocidade / sqrt(2));
             (*carro1).hitboxveiculo.y -= (int)((*carro1).velocidade / sqrt(2));
 
-            if(colidiu(*carro1, barreiras, numero_bordas) == 1){
+            if(colidiu(*carro1, barreiras, numero_bordas, 8) == 1){
                 (*carro1).posicaoveiculo.x += (int)((*carro1).velocidade / sqrt(2));
                 (*carro1).posicaoveiculo.y += (int)((*carro1).velocidade / sqrt(2));
                 (*carro1).hitboxveiculo.x += (int)((*carro1).velocidade / sqrt(2));
@@ -94,7 +251,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle* barreiras){
             (*carro1).hitboxveiculo.x += (int) ((*carro1).velocidade / sqrt(2));
             (*carro1).hitboxveiculo.y -= (int) ((*carro1).velocidade / sqrt(2));
 
-            if(colidiu(*carro1, barreiras, numero_bordas) == 1){
+            if(colidiu(*carro1, barreiras, numero_bordas, 5) == 1){
                 (*carro1).posicaoveiculo.x -= (int)((*carro1).velocidade / sqrt(2));
                 (*carro1).posicaoveiculo.y += (int)((*carro1).velocidade / sqrt(2));
                 (*carro1).hitboxveiculo.x -= (int) ((*carro1).velocidade / sqrt(2));
@@ -113,7 +270,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle* barreiras){
             (*carro1).hitboxveiculo.width = 50;
             (*carro1).hitboxveiculo.height = 100;
 
-            if(colidiu(*carro1, barreiras, numero_bordas) == 1){
+            if(colidiu(*carro1, barreiras, numero_bordas, 1) == 1){
                 (*carro1).posicaoveiculo.y += (int)(*carro1).velocidade;
                 (*carro1).hitboxveiculo.y += (int)(*carro1).velocidade; 
             }
@@ -130,7 +287,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle* barreiras){
             (*carro1).hitboxveiculo.x -= (int)((*carro1).velocidade / sqrt(2));
             (*carro1).hitboxveiculo.y += (int)((*carro1).velocidade / sqrt(2));
 
-            if(colidiu(*carro1, barreiras, numero_bordas) == 1){
+            if(colidiu(*carro1, barreiras, numero_bordas, 7) == 1){
                 (*carro1).posicaoveiculo.x += (int)((*carro1).velocidade / sqrt(2));
                 (*carro1).posicaoveiculo.y -= (int)((*carro1).velocidade / sqrt(2));
                 (*carro1).hitboxveiculo.x += (int)((*carro1).velocidade / sqrt(2));
@@ -146,7 +303,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle* barreiras){
             (*carro1).hitboxveiculo.x += (int)((*carro1).velocidade / sqrt(2));
             (*carro1).hitboxveiculo.y += (int)((*carro1).velocidade / sqrt(2));
 
-            if(colidiu(*carro1, barreiras, numero_bordas) == 1){
+            if(colidiu(*carro1, barreiras, numero_bordas, 6) == 1){
                 (*carro1).posicaoveiculo.x -= (int)((*carro1).velocidade / sqrt(2));
                 (*carro1).posicaoveiculo.y -= (int)((*carro1).velocidade / sqrt(2));
                 (*carro1).hitboxveiculo.x -= (int)((*carro1).velocidade / sqrt(2));
@@ -165,7 +322,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle* barreiras){
             (*carro1).hitboxveiculo.width = 50;
             (*carro1).hitboxveiculo.height = 100;
 
-            if(colidiu(*carro1, barreiras, numero_bordas) == 1){
+            if(colidiu(*carro1, barreiras, numero_bordas, 3) == 1){
                 (*carro1).posicaoveiculo.y -= (int)(*carro1).velocidade;
                 (*carro1).hitboxveiculo.y -= (int)(*carro1).velocidade;
             }
@@ -183,7 +340,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle* barreiras){
         (*carro1).hitboxveiculo.width = 100;
         (*carro1).hitboxveiculo.height = 50;
 
-        if(colidiu(*carro1, barreiras, numero_bordas) == 1){
+        if(colidiu(*carro1, barreiras, numero_bordas, 2) == 1){
             (*carro1).posicaoveiculo.x -= (int)(*carro1).velocidade;
             (*carro1).hitboxveiculo.x -= (int)(*carro1).velocidade;
         }
@@ -200,7 +357,7 @@ int movimentarCarro1(veiculo* carro1, Rectangle* barreiras){
         (*carro1).hitboxveiculo.width = 100;
         (*carro1).hitboxveiculo.height = 50;
 
-        if(colidiu(*carro1, barreiras, numero_bordas) == 1){
+        if(colidiu(*carro1, barreiras, numero_bordas, 4) == 1){
             (*carro1).posicaoveiculo.x += (int)(*carro1).velocidade;
             (*carro1).hitboxveiculo.x += (int)(*carro1).velocidade;
         }
@@ -221,7 +378,7 @@ int movimentarCarro2(veiculo* carro2, Rectangle* barreiras){
             (*carro2).hitboxveiculo.x -= (int)((*carro2).velocidade / sqrt(2));
             (*carro2).hitboxveiculo.y -= (int)((*carro2).velocidade / sqrt(2));
 
-            if(colidiu(*carro2, barreiras, numero_bordas) == 1){
+            if(colidiu(*carro2, barreiras, numero_bordas, 8) == 1){
                 (*carro2).posicaoveiculo.x += (int)((*carro2).velocidade / sqrt(2));
                 (*carro2).posicaoveiculo.y += (int)((*carro2).velocidade / sqrt(2));
                 (*carro2).hitboxveiculo.x += (int)((*carro2).velocidade / sqrt(2));
@@ -237,7 +394,7 @@ int movimentarCarro2(veiculo* carro2, Rectangle* barreiras){
             (*carro2).hitboxveiculo.x += (int) ((*carro2).velocidade / sqrt(2));
             (*carro2).hitboxveiculo.y -= (int) ((*carro2).velocidade / sqrt(2));
 
-            if(colidiu(*carro2, barreiras, numero_bordas) == 1){
+            if(colidiu(*carro2, barreiras, numero_bordas, 5) == 1){
                 (*carro2).posicaoveiculo.x -= (int)((*carro2).velocidade / sqrt(2));
                 (*carro2).posicaoveiculo.y += (int)((*carro2).velocidade / sqrt(2));
                 (*carro2).hitboxveiculo.x -= (int) ((*carro2).velocidade / sqrt(2));
@@ -256,7 +413,7 @@ int movimentarCarro2(veiculo* carro2, Rectangle* barreiras){
             (*carro2).hitboxveiculo.width = 50;
             (*carro2).hitboxveiculo.height = 100;
 
-            if(colidiu(*carro2, barreiras, numero_bordas) == 1){
+            if(colidiu(*carro2, barreiras, numero_bordas, 1) == 1){
                 (*carro2).posicaoveiculo.y += (int)(*carro2).velocidade;
                 (*carro2).hitboxveiculo.y += (int)(*carro2).velocidade; 
             }
@@ -273,7 +430,7 @@ int movimentarCarro2(veiculo* carro2, Rectangle* barreiras){
             (*carro2).hitboxveiculo.x -= (int)((*carro2).velocidade / sqrt(2));
             (*carro2).hitboxveiculo.y += (int)((*carro2).velocidade / sqrt(2));
 
-            if(colidiu(*carro2, barreiras, numero_bordas) == 1){
+            if(colidiu(*carro2, barreiras, numero_bordas, 7) == 1){
                 (*carro2).posicaoveiculo.x += (int)((*carro2).velocidade / sqrt(2));
                 (*carro2).posicaoveiculo.y -= (int)((*carro2).velocidade / sqrt(2));
                 (*carro2).hitboxveiculo.x += (int)((*carro2).velocidade / sqrt(2));
@@ -289,7 +446,7 @@ int movimentarCarro2(veiculo* carro2, Rectangle* barreiras){
             (*carro2).hitboxveiculo.x += (int)((*carro2).velocidade / sqrt(2));
             (*carro2).hitboxveiculo.y += (int)((*carro2).velocidade / sqrt(2));
 
-            if(colidiu(*carro2, barreiras, numero_bordas) == 1){
+            if(colidiu(*carro2, barreiras, numero_bordas, 6) == 1){
                 (*carro2).posicaoveiculo.x -= (int)((*carro2).velocidade / sqrt(2));
                 (*carro2).posicaoveiculo.y -= (int)((*carro2).velocidade / sqrt(2));
                 (*carro2).hitboxveiculo.x -= (int)((*carro2).velocidade / sqrt(2));
@@ -308,7 +465,7 @@ int movimentarCarro2(veiculo* carro2, Rectangle* barreiras){
             (*carro2).hitboxveiculo.width = 50;
             (*carro2).hitboxveiculo.height = 100;
 
-            if(colidiu(*carro2, barreiras, numero_bordas) == 1){
+            if(colidiu(*carro2, barreiras, numero_bordas, 3) == 1){
                 (*carro2).posicaoveiculo.y -= (int)(*carro2).velocidade;
                 (*carro2).hitboxveiculo.y -= (int)(*carro2).velocidade;
             }
@@ -326,7 +483,7 @@ int movimentarCarro2(veiculo* carro2, Rectangle* barreiras){
         (*carro2).hitboxveiculo.width = 100;
         (*carro2).hitboxveiculo.height = 50;
 
-        if(colidiu(*carro2, barreiras, numero_bordas) == 1){
+        if(colidiu(*carro2, barreiras, numero_bordas, 2) == 1){
             (*carro2).posicaoveiculo.x -= (int)(*carro2).velocidade;
             (*carro2).hitboxveiculo.x -= (int)(*carro2).velocidade;
         }
@@ -343,7 +500,7 @@ int movimentarCarro2(veiculo* carro2, Rectangle* barreiras){
         (*carro2).hitboxveiculo.width = 100;
         (*carro2).hitboxveiculo.height = 50;
 
-        if(colidiu(*carro2, barreiras, numero_bordas) == 1){
+        if(colidiu(*carro2, barreiras, numero_bordas, 4) == 1){
             (*carro2).posicaoveiculo.x += (int)(*carro2).velocidade;
             (*carro2).hitboxveiculo.x += (int)(*carro2).velocidade;
         }
