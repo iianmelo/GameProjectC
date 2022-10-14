@@ -1,116 +1,111 @@
+#include "mapa.h"
 #include "raylib.h"
 #include "personagem.h"
 
 Texture2D abrirmapa(){
-    Image mapaPng = LoadImage("assets/images/mapa_novo.png");
+    Image mapaPng = LoadImage("assets/images/mapa.png");
     Texture2D mapa_imagem = LoadTextureFromImage(mapaPng);
     UnloadImage(mapaPng);
     return mapa_imagem;
 }
 
 
-void ColisaoLimitesPista(Rectangle mapa[], Texture2D mapa_imagem){
+void ColisaoLimitesPista(Rectangle barreiras[], Texture2D mapa_imagem){
 
     //Retangulos do limite da pista
 
-    mapa[0].x = 0;
-    mapa[0].y = 0;
-    mapa[0].width = 1920 ;
-    mapa[0].height = 60;
+    barreiras[0].x = 0;
+    barreiras[0].y = 0;
+    barreiras[0].width = 1920 ;
+    barreiras[0].height = 60;
 
-    mapa[1].x = 0;
-    mapa[1].y = 60 ;
-    mapa[1].width = 51;
-    mapa[1].height = 1033;
+    barreiras[1].x = 0;
+    barreiras[1].y = 60 ;
+    barreiras[1].width = 51;
+    barreiras[1].height = 1033;
 
-    mapa[2].x = 231;
-    mapa[2].y = 231;
-    mapa[2].width = 303;
-    mapa[2].height = 660;
+    barreiras[2].x = 231;
+    barreiras[2].y = 231;
+    barreiras[2].width = 303;
+    barreiras[2].height = 660;
 
-    mapa[3].x = 539;
-    mapa[3].y = 587;
-    mapa[3].width = 569;
-    mapa[3].height = 309;
+    barreiras[3].x = 539;
+    barreiras[3].y = 587;
+    barreiras[3].width = 569;
+    barreiras[3].height = 309;
 
-    mapa[4].x = 701 ;
-    mapa[4].y = 61;
-    mapa[4].width = 199;
-    mapa[4].height = 369;
+    barreiras[4].x = 701 ;
+    barreiras[4].y = 61;
+    barreiras[4].width = 199;
+    barreiras[4].height = 369;
 
-    mapa[5].x = 1075;
-    mapa[5].y = 243;
-    mapa[5].width = 517;
-    mapa[5].height = 175;
+    barreiras[5].x = 1075;
+    barreiras[5].y = 243;
+    barreiras[5].width = 517;
+    barreiras[5].height = 175;
 
-    mapa[6].x = 1763;
-    mapa[6].y = 61;
-    mapa[6].width = 153;
-    mapa[6].height = 1021;
+    barreiras[6].x = 1763;
+    barreiras[6].y = 61;
+    barreiras[6].width = 153;
+    barreiras[6].height = 1021;
 
-    mapa[7].x = 1293;
-    mapa[7].y = 597;
-    mapa[7].width = 465;
-    mapa[7].height = 481;
+    barreiras[7].x = 1293;
+    barreiras[7].y = 597;
+    barreiras[7].width = 465;
+    barreiras[7].height = 481;
 
-    mapa[8].x = 1073;
-    mapa[8].y = 415;
-    mapa[8].width = 45;
-    mapa[8].height = 169;
+    barreiras[8].x = 1073;
+    barreiras[8].y = 415;
+    barreiras[8].width = 45;
+    barreiras[8].height = 169;
 
-    mapa[9].x = 55;
-    mapa[9].y = 1061;
-    mapa[9].width = 1229;
-    mapa[9].height = 17;
+    barreiras[9].x = 55;
+    barreiras[9].y = 1061;
+    barreiras[9].width = 1229;
+    barreiras[9].height = 17;
 
-    mapa[10].x = 1073;
-    mapa[10].y = 435;
-    mapa[10].width = 45;
-    mapa[10].height = 169;
+    barreiras[10].x = 1073;
+    barreiras[10].y = 435;
+    barreiras[10].width = 45;
+    barreiras[10].height = 169;
 
     //obstaculos (pedras e barrils)
 
-    mapa[11].x = 551;
-    mapa[11].y = 297;
-    mapa[11].width = 65;
-    mapa[11].height = 62;
+    barreiras[11].x = 593;
+    barreiras[11].y = 469;
+    barreiras[11].width = 57;
+    barreiras[11].height = 60;
 
-    mapa[12].x = 314;
-    mapa[12].y = 68;
-    mapa[12].width = 131;
-    mapa[12].height = 51;
+    barreiras[12].x = 314;
+    barreiras[12].y = 68;
+    barreiras[12].width = 131;
+    barreiras[12].height = 50;
 
-    mapa[13].x = 70;
-    mapa[13].y = 516;
-    mapa[13].width = 65;
-    mapa[13].height = 43;
+    barreiras[13].x = 70;
+    barreiras[13].y = 516;
+    barreiras[13].width = 65;
+    barreiras[13].height = 43;
 
-    mapa[14].x = 385;
-    mapa[14].y = 908;
-    mapa[14].width = 124;
-    mapa[14].height = 51;
+    barreiras[14].x = 385;
+    barreiras[14].y = 908;
+    barreiras[14].width = 124;
+    barreiras[14].height = 51;
 
-    mapa[15].x = 999;
-    mapa[15].y = 905;
-    mapa[15].width = 66;
-    mapa[15].height = 64;
+    barreiras[15].x = 999;
+    barreiras[15].y = 905;
+    barreiras[15].width = 66;
+    barreiras[15].height = 64;
 
-    mapa[16].x = 1213;
-    mapa[16].y = 689;
-    mapa[16].width = 62;
-    mapa[16].height = 46;
+    barreiras[16].x = 1213;
+    barreiras[16].y = 689;
+    barreiras[16].width = 62;
+    barreiras[16].height = 46;
 
-    mapa[17].x = 1113;
-    mapa[17].y = 86;
-    mapa[17].width = 83;
-    mapa[17].height = 49;
-    
-    //barreira que impede o carrinho a ir para sentido contrario
-    mapa[18].x = 1607;
-    mapa[18].y = 198;
-    mapa[18].width = 138;
-    mapa[18].height = 57;
-    
+    barreiras[17].x = 1113;
+    barreiras[17].y = 86;
+    barreiras[17].width = 83;
+    barreiras   [17].height = 49;
+
 }
     //nitros (moedas)
 void LocalizaNitros(Rectangle nitros[], Texture2D mapa){
@@ -161,18 +156,7 @@ void LocalizaJumper(Rectangle jumper[], Texture2D mapa){
 }
  
     //linha de partida
-    Rectangle linhaDePartida;
-    linhaDePartida.x = 1471;
-    linhaDePartida.y = 75;
-    linhaDePartida.width = 43;
-    linhaDePartida.height = 151;
+    Rectangle linhaDePartida = {1471, 75, 43, 151};
 
     //linha de chegada
-
-    Rectangle linhaDePartida;
-    linhaDeChegada.x = 1604;
-    linhaDeChegada.y = 291;
-    linhaDeChegada.width = 152;
-    linhaDeChegada.height = 49; 
-
-
+    Rectangle linhaDeChegada = {1604, 291, 152, 49};
