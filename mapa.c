@@ -148,10 +148,10 @@ void LocalizaJumper(Rectangle jumper[], Texture2D mapa){
     jumper[1].width = 89;
     jumper[1].height = 57;
 
-    jumper[2].x = 1113;
-    jumper[2].y = 86;
-    jumper[2].width = 83;
-    jumper[2].height = 49;
+    jumper[2].x = 339;
+    jumper[2].y = 154;
+    jumper[2].width = 94;
+    jumper[2].height = 58;
 }
  
     //linha de partida
