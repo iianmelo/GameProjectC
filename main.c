@@ -9,6 +9,7 @@
 
 float tempo_nitro_ligado = 2.0; 
 float velocidade_com_nitro = 5;
+float velocidade_base = 2;
 float velocidade_sem_nitro = 2;
 int numero_nitros = 5; //moedas
 int numero_jumpers = 3;
@@ -27,8 +28,8 @@ int main(){
 
     timer timercarro1 = {0, 0};
     timer timercarro2 = {0, 0};
-    spritesheetcarro carro1_sheet = {0, 0.0f, 4}; //nitro comeca desligado e o carro1 nasce apontando para esquerda
-    spritesheetcarro carro2_sheet = {0, 0.0f, 4}; //nitro comeca desligado e o carro2 nasce apontando para esquerda
+    spritesheetcarro carro1_sheet = {0, 0.0f, 4, 0}; //nitro comeca desligado e o carro1 nasce apontando para esquerda
+    spritesheetcarro carro2_sheet = {0, 0.0f, 4, 0}; //nitro comeca desligado e o carro2 nasce apontando para esquerda
 
     //retangulos do mapa:
     Rectangle barreiras[18];
@@ -48,7 +49,7 @@ int main(){
     //Imagens e Texturas nitro:
     Image nitro_imagem = LoadImage("C:/Users/Ianme/Downloads/craftpix-889156-free-racing-game-kit/PNG/Car_Effects/Nitro/Nitro_006.png");
     ImageResize(&nitro_imagem, 12, 30);
-    Texture2D nitro = LoadTextureFromImage(nitro_imagem);
+    Texture2D nit   ro = LoadTextureFromImage(nitro_imagem);
 
     //Imagens e textura mapa:
     Image mapa_corrida = LoadImage("C:/Users/Ianme/Downloads/mapa.png");
@@ -89,7 +90,14 @@ int main(){
 
             if(Carro1moeda != 0) carro1_sheet.moeda = Carro1moeda;
             if(Carro2moeda != 0) carro2_sheet.moeda = Carro1moeda;
-            
+
+            int k1 = carro1_sheet.moeda % 60;
+            velocidade_sem_nitro = k1 * velocidade_base; 
+            int k2 = carro2_sheet.moeda % 60;
+            velocidade_sem_nitro = k2 * velocidade_base;
+
+
+
             //verificando se pegaram nitro:
             Carro1nitro = pegouNitro(carro1, jumpers, numero_jumpers);
             Carro2nitro = pegouNitro(carro2, jumpers, numero_jumpers);
@@ -100,12 +108,12 @@ int main(){
             //caso peguem o nitro, timer comeca e velocidade aumenta
             if(carro1_sheet.nitro == 1 && timercarro1.ligado == 0){
                 startTimer(&timercarro1, tempo_nitro_ligado);
-                carro1.velocidade = velocidade_com_nitro;
+                carro1.velocidade = 2.5 * velocidade_sem_nitro;
                 timercarro1.ligado = 1;
             }    
             if(carro2_sheet.nitro == 1 && timercarro2.ligado == 0){
                 startTimer(&timercarro2, tempo_nitro_ligado);
-                carro2.velocidade = velocidade_com_nitro;
+                carro2.velocidade = 2.5 * velocidade_sem_nitro;
                 timercarro2.ligado = 1;
             }
             
