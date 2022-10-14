@@ -1,9 +1,9 @@
 //inicialização
 InitAudioDevice();
-Music MusicaMenu= LoadMusicStream(""); 
-Music MusicaFundo= LoadMusicStream(""); 
-Music MusicaNitro = LoadMusicStream("");
-Music MusicaBatida = LoadMusicStream("");
+Music MusicaMenu= LoadMusicStream("musicaMenu.mp3"); 
+Music MusicaFundo= LoadMusicStream("musicaCircuito.mp3"); 
+Music MusicaNitro = LoadMusicStream("audionitro.mp3");
+Music MusicaBatida = LoadMusicStream("audiobatida.mp3");
 Music MusicaMoeda = LoadMusicStream("");
 Music MusicaVencedor1 = LoadMusicStream("");
 Music MusicaVencedor2 = LoadMusicStream("");
