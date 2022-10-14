@@ -30,18 +30,12 @@ int main(){
     Music MusicaMoeda = LoadMusicStream("audiomoeda.mp3");
     Music MusicaVencedor1 = LoadMusicStream("vencedor1.mp3");
     Music MusicaVencedor2 = LoadMusicStream("vencedor2.mp3");
-    PlayMusicStream(MusicaMenu);
     
     SetTargetFPS(60);
     //parte  fundamental pra pausar a musica do menu
     bool pause = false;
     
     aux=1;
-    
-    //parte da musica menu
-    UpdateMusicStream(MusicaMenu); 
-    SetMasterVolume(0.7);
-    
     
     timer timercarro1 = {0, 0};
     timer timercarro2 = {0, 0};
@@ -86,10 +80,7 @@ int main(){
     //loop principal do jogo
     while (!WindowShouldClose()){
         
-        //pausa musica menu e toca a do circuito
-        PauseMusicStream(MusicaMenu);
-        UpdateMusicStream(MusicaFundo); 
-        SetMasterVolume(0.7);
+        
         
         veiculo carro1;
         veiculo carro2;
@@ -109,8 +100,8 @@ int main(){
             carro2_sheet.direcao = acaoCarro2;
             
             //verificando se pegaram moeda:
-            Carro1moeda += pegouMoeda(carro1, nitros, numero_nitros);
-            Carro2moeda += pegouMoeda(carro2, nitros, numero_nitros);
+            Carro1moeda += pegouMoeda(carro1, nitros, numero_nitros, carro1_sheet.direcao);
+            Carro2moeda += pegouMoeda(carro2, nitros, numero_nitros, carro2_sheet.direcao);
 
             if(Carro1moeda != 0){ 
                 carro1_sheet.moeda = Carro1moeda;                 
@@ -122,8 +113,8 @@ int main(){
                 SetMasterVolume(1.0); }
             
             //verificando se pegaram nitro:
-            Carro1nitro = pegouNitro(carro1, jumpers, numero_jumpers);
-            Carro2nitro = pegouNitro(carro2, jumpers, numero_jumpers);
+            Carro1nitro = pegouNitro(carro1, jumpers, numero_jumpers, carro1_sheet.direcao);
+            Carro2nitro = pegouNitro(carro2, jumpers, numero_jumpers, carro2_sheet.direcao);
 
             if(Carro1nitro == 1)carro1_sheet.nitro = 1;
             if(Carro2nitro == 1)carro2_sheet.nitro = 1;
@@ -196,6 +187,10 @@ int main(){
             BeginDrawing();
             ClearBackground(RAYWHITE);
             if(aux==1) {
+                PlayMusicStream(MusicaMenu);
+                //parte da musica menu
+                UpdateMusicStream(MusicaMenu); 
+                SetMasterVolume(0.7);
                 final = 0;
                 iniciarMenu(imagemMenu);
             }
@@ -207,7 +202,11 @@ int main(){
                 abrirExplicacao(imagemComoJogar);
             }
             else if(aux==4){ 
-            //animando os carros:
+                //pausa musica menu e toca a do circuito
+                PauseMusicStream(MusicaMenu);
+                UpdateMusicStream(MusicaFundo); 
+                SetMasterVolume(0.7);
+                //animando os carros:
                 DrawTexture(mapa_pista, 0, 0, RAYWHITE);
                 animarCarro(&carro1_sheet, text_carro1_cima, nitro, &carro1);
                 animarCarro(&carro2_sheet, text_carro2_cima, nitro, &carro2);
