@@ -1,3 +1,2 @@
 # JOGO
-Jogo projeto de IP Grupo 8
-Luisa, Alice, Ian, Yago, Icaro
+Projeto da disciplina de Introdução a Programação no qual consiste em criar um jogo em C utilizando a biblioteca raylib. 
