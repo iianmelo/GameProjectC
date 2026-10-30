@@ -11,15 +11,16 @@
 float tempo_nitro_ligado = 2.0; 
 float velocidade_com_nitro = 5;
 float velocidade_sem_nitro = 2;
-int numero_nitros = 6; //moedas
-int numero_jumpers = 3;
+int numero_nitros = 5; //moedas definidas em LocalizaNitros
+int numero_jumpers = 6;
 int acaoCarro1 = 0, Carro1nitro, Carro1moeda = 0;
 int acaoCarro2 = 0, Carro2nitro, Carro2moeda = 0;
 int final = 0;
 
 int main(){
 
-    InitWindow(GetScreenWidth(), GetScreenHeight(), "IP Racers");
+    // Arte do jogo é 1920x1080. GetScreenWidth() antes do InitWindow vale 0.
+    InitWindow(1920, 1080, "IP Racers");
     ToggleFullscreen();
     //inicializando e colocando as musicas
     InitAudioDevice();
@@ -43,35 +44,35 @@ int main(){
     spritesheetcarro carro2_sheet = {0, 0.0f, 4}; //nitro comeca desligado e o carro2 nasce apontando para esquerda
 
     //retangulos do mapa:
-    Rectangle barreiras[18];
+    Rectangle barreiras[19];
     Rectangle nitros[numero_nitros];
     Rectangle jumpers[numero_jumpers];
 
     //Imagens e Texturas carro 1 (vermelho):
-    Image carro1_cima = LoadImage("Car_1_01_cima.png");
+    Image carro1_cima = LoadImage("assets/images/Car_1_01_cima.png");
     ImageResize (&carro1_cima, 50, 100);
     Texture2D text_carro1_cima = LoadTextureFromImage(carro1_cima);
     
     //Imagens e Texturas carro 2 (amarelo):
-    Image carro2_cima = LoadImage("Car_3_01_cima.png");
+    Image carro2_cima = LoadImage("assets/images/Car_3_01_cima.png");
     ImageResize (&carro2_cima, 50, 100);
     Texture2D text_carro2_cima = LoadTextureFromImage(carro2_cima);
 
     //Imagens e Texturas nitro:
-    Image nitro_imagem = LoadImage("Nitro_006.png");
+    Image nitro_imagem = LoadImage("assets/images/Nitro_006.png");
     ImageResize(&nitro_imagem, 12, 30);
     Texture2D nitro = LoadTextureFromImage(nitro_imagem);
 
     //Imagens e textura mapa:
-    Image mapa_corrida = LoadImage("mapa.png");
+    Image mapa_corrida = LoadImage("assets/images/mapa_novo2.png");
     Texture2D mapa_pista = LoadTextureFromImage(mapa_corrida);
 
     //Texturas menu inicial:
-    Texture2D imagemMenu = LoadTexture("menu_inicial.png");
-    Texture2D imagemComoJogar = LoadTexture("como_jogar.png");
-    Texture2D imagemIniciando = LoadTexture("iniciandonovo.png");
-    Texture2D imagemVencedor1 = LoadTexture("vencedor1.png");
-    Texture2D imagemVencedor2 = LoadTexture("vencedor2.png");
+    Texture2D imagemMenu = LoadTexture("assets/images/menu_inicial.png");
+    Texture2D imagemComoJogar = LoadTexture("assets/images/como_jogar.png");
+    Texture2D imagemIniciando = LoadTexture("assets/images/iniciandonovo.png");
+    Texture2D imagemVencedor1 = LoadTexture("assets/images/vencedor1.png");
+    Texture2D imagemVencedor2 = LoadTexture("assets/images/vencedor2.png");
 
     ColisaoLimitesPista(barreiras, mapa_pista);
     LocalizaJumper(jumpers, mapa_pista);
