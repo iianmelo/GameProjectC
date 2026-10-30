@@ -172,14 +172,12 @@ int main(){
             }
         }
         if(aux==7 && final==1) {
-            mostrarTelaFinal1(imagemVencedor1);
             //audiovencedor1
             PauseMusicStream(MusicaFundo);
             UpdateMusicStream(MusicaVencedor1);
             SetMasterVolume(1.0);
         }
         if(aux==7 && final==2) {
-            mostrarTelaFinal2(imagemVencedor2);
             //audiovencedor2
             PauseMusicStream(MusicaFundo);
             UpdateMusicStream(MusicaVencedor2);
@@ -211,6 +209,12 @@ int main(){
                 DrawTexture(mapa_pista, 0, 0, RAYWHITE);
                 animarCarro(&carro1_sheet, text_carro1_cima, nitro, &carro1);
                 animarCarro(&carro2_sheet, text_carro2_cima, nitro, &carro2);
+            }
+            else if(aux==7 && final==1) {
+                mostrarTelaFinal1(imagemVencedor1);
+            }
+            else if(aux==7 && final==2) {
+                mostrarTelaFinal2(imagemVencedor2);
             }
             EndDrawing();
         }
