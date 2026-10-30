@@ -369,13 +369,32 @@ else
     MAKEFILE_PARAMS = $(PROJECT_NAME)
 endif
 
+# Linux: os headers incluem os .c, então só main.c entra no link.
+# libraylib vem da instalação local (/usr/local) ou do pkg-config.
+ifeq ($(PLATFORM_OS), LINUX)
+    OBJS = main.c
+    # main.c inclui os outros .c pelos headers; qualquer um deles precisa disparar o rebuild.
+    GAME_SOURCES = $(wildcard *.c *.h)
+    RAYLIB_CFLAGS := $(shell pkg-config --cflags raylib 2>/dev/null)
+    RAYLIB_LIBS := $(shell pkg-config --libs raylib 2>/dev/null)
+    ifeq ($(RAYLIB_LIBS),)
+        INCLUDE_PATHS = -I. -I/usr/local/include -I/usr/include
+        LDFLAGS = -L/usr/local/lib
+        LDLIBS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+    else
+        INCLUDE_PATHS = -I. $(RAYLIB_CFLAGS)
+        LDFLAGS =
+        LDLIBS = $(RAYLIB_LIBS)
+    endif
+endif
+
 # Default target entry
 # NOTE: We call this Makefile target or Makefile.Android target
 all:
 	$(MAKE) $(MAKEFILE_PARAMS)
 
 # Project target defined by PROJECT_NAME
-$(PROJECT_NAME): $(OBJS)
+$(PROJECT_NAME): $(OBJS) $(GAME_SOURCES)
 	$(CC) -o $(PROJECT_NAME)$(EXT) $(OBJS) $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # Compile source files

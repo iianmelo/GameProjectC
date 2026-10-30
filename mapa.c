@@ -3,7 +3,7 @@
 #include "personagem.h"
 
 Texture2D abrirmapa(){
-    Image mapaPng = LoadImage("assets/images/mapa.png");
+    Image mapaPng = LoadImage("assets/images/mapa_novo2.png");
     Texture2D mapa_imagem = LoadTextureFromImage(mapaPng);
     UnloadImage(mapaPng);
     return mapa_imagem;
@@ -114,7 +114,7 @@ void ColisaoLimitesPista(Rectangle barreiras[], Texture2D mapa_imagem){
 
 }
     //nitros (moedas)
-/*void LocalizaNitros(Rectangle nitros[], Texture2D mapa){
+void LocalizaNitros(Rectangle nitros[], Texture2D mapa){
 
     nitros[0].x = 1002;
     nitros[0].y = 104;
@@ -140,7 +140,7 @@ void ColisaoLimitesPista(Rectangle barreiras[], Texture2D mapa_imagem){
     nitros[4].y = 991;
     nitros[4].width = 44;
     nitros[4].height = 44;
-}*/
+}
 
     //jumper que aumenta a velocidade
 void LocalizaJumper(Rectangle jumper[], Texture2D mapa){

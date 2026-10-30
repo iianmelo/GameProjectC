@@ -4,7 +4,6 @@
 #include "fimDoJogo.h"
 
 void mostrarTelaFinal1(Texture2D imagemVencedor1){
-    imagemVencedor1 = LoadTexture("vencedor1.png");
     DrawTexture(imagemVencedor1, 0 , 0 , RAYWHITE);
 
     // opções que existem nessa tela
@@ -19,7 +18,6 @@ void mostrarTelaFinal1(Texture2D imagemVencedor1){
     }
 }
 void mostrarTelaFinal2(Texture2D imagemVencedor2){
-    imagemVencedor2 = LoadTexture("vencedor2.png");
     DrawTexture(imagemVencedor2, 0 , 0 , RAYWHITE);
 
     // opções que existem nessa tela
